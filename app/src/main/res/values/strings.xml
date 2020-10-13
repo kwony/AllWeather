@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">AllWeather</string>
+
+    <string name="time_now"><![CDATA[Now]]></string>
+    <string name="time_minutes"><![CDATA[%@min]]></string>
+    <string name="time_hours"><![CDATA[%@h]]></string>
+    <string name="time_weeks"><![CDATA[%@w ]]></string>
+    <string name="time_months"><![CDATA[%@M]]></string>
+    <string name="time_days"><![CDATA[%@d]]></string>
+    <string name="time_years"><![CDATA[%@y]]></string>
 </resources>
