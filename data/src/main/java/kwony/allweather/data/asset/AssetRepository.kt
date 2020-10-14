@@ -9,7 +9,7 @@ class AssetRepository @Inject constructor() {
     @Inject lateinit var assetDao: AssetDao
 
     fun getAssetMetaList(accountId: Long): Flowable<List<AssetMeta>> {
-        return assetDao.getEntityFromAccount(accountId)
+        return assetDao.getEntitiesFromAccount(accountId)
     }
 
     fun createAssetMeta(assetMeta: AssetMeta): Long {

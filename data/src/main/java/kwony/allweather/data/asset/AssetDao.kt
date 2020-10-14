@@ -15,7 +15,11 @@ interface AssetDao {
     fun getEntities(): Flowable<List<AssetMeta>>
 
     @Query("select * from assetmeta where assetMeta.accountId = :accountId")
-    fun getEntityFromAccount(accountId: Long): Flowable<List<AssetMeta>>
+    fun getEntitiesFromAccount(accountId: Long): Flowable<List<AssetMeta>>
 
+    @Query("delete from assetmeta where assetId = :assetId")
+    fun delete(assetId: Long)
 
+    @Query("delete from assetmeta")
+    fun deleteAll()
 }
