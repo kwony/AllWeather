@@ -14,6 +14,9 @@ interface AccountDao {
     @Query("select * from accountmeta")
     fun getEntities(): Flowable<List<AccountMeta>>
 
+    @Query("select * from accountmeta where accountId = :accountId")
+    fun getEntity(accountId: Long): Flowable<AccountMeta>
+
     @Query("delete from accountmeta where accountId = :accountId")
     fun delete(accountId: Long)
 

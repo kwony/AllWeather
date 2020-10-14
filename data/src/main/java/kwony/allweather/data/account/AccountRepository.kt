@@ -8,6 +8,10 @@ import javax.inject.Singleton
 class AccountRepository @Inject constructor() {
     @Inject lateinit var accountDao: AccountDao
 
+    fun getAccountMeta(accountId: Long): Flowable<AccountMeta> {
+        return accountDao.getEntity(accountId)
+    }
+
     fun getAccountMetaList(): Flowable<List<AccountMeta>> {
         return accountDao.getEntities()
     }
