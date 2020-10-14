@@ -9,7 +9,7 @@ import io.reactivex.Flowable
 @Dao
 interface AccountDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun upsert(account: AccountDao): Long
+    fun upsert(account: AccountMeta): Long
 
     @Query("select * from accountmeta")
     fun getEntities(): Flowable<List<AccountMeta>>
