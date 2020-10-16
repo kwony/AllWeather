@@ -24,20 +24,16 @@ class AssetDefaultViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) 
         }
     }
 
-    fun bind(assetMeta: AssetMeta) {
+    fun bind(assetMeta: AssetMeta, listener: AssetAdapterClickListener?) {
         binding.vhAssetName.text = assetMeta.assetName
         binding.vhAssetAmount.text = NumberFormat.getInstance(Locale.getDefault()).format(assetMeta.assetAmount)
 
         RxView.clicks(binding.vhAssetEdit)
-            .doOnNext {
-
-            }
+            .doOnNext { listener?.editClick(assetMeta) }
             .subscribe()
 
         RxView.clicks(binding.vhAssetDelete)
-            .doOnNext {
-
-            }
+            .doOnNext { listener?.deleteClick(assetMeta) }
             .subscribe()
     }
 }

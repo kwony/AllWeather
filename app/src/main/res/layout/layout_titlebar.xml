@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/layout_titlebar_left_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:src="@drawable/ic_close"/>
+
+    <View
+        android:id="@+id/layout_title_bar_left_iv_click"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:layout_constraintTop_toTopOf="@id/layout_titlebar_left_iv"
+        app:layout_constraintBottom_toBottomOf="@id/layout_titlebar_left_iv"
+        app:layout_constraintStart_toStartOf="@id/layout_titlebar_left_iv"
+        app:layout_constraintEnd_toEndOf="@id/layout_titlebar_left_iv"/>
+
+    <TextView
+        android:id="@+id/layout_titlebar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:textColor="#000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="이것은 타이틀바 제목"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

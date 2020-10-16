@@ -1,11 +1,7 @@
 package kwony.allweather.arch
 
 import androidx.lifecycle.*
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
 import io.reactivex.Observable
-import io.reactivex.subjects.BehaviorSubject
-
 
 val ALWAYS_ON get() =  object: LifecycleOwner {
     override fun getLifecycle(): Lifecycle {
@@ -17,7 +13,7 @@ val ALWAYS_ON get() =  object: LifecycleOwner {
     }
 }
 
-fun <T> MutableLiveData<T>.toObservable(): Observable<T> {
+fun <T> LiveData<T>.toObservable(): Observable<T> {
     return Observable.fromPublisher<T> {
         LiveDataReactiveStreams.toPublisher(ALWAYS_ON, this)
     }

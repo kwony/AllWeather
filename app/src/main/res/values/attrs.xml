@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TitleBar">
+        <attr name="title" format="string"/>
+        <attr name="title_size" format="dimension" />
+        <attr name="title_color" format="color" />
+        <attr name="subtitle" format="string"/>
+        <attr name="drawable_left" format="reference"/>
+        <attr name="drawable_left_margin" format="dimension"/>
+        <attr name="drawable_right" format="reference"/>
+        <attr name="drawable_right_margin" format="dimension"/>
+        <attr name="text_left" format="string"/>
+        <attr name="text_left_margin" format="dimension" />
+        <attr name="text_left_size" format="dimension" />
+        <attr name="text_right" format="string"/>
+        <attr name="text_right_color" format="color"/>
+        <attr name="text_right_margin" format="dimension" />
+        <attr name="text_right_size" format="dimension" />
+    </declare-styleable>
+</resources>

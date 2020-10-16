@@ -7,6 +7,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import kwony.allweather.R
+import kwony.allweather.data.asset.AssetMeta
 import kwony.allweather.databinding.FragmentAssetsBinding
 import kwony.allweather.maintab.MainViewModel
 
@@ -14,28 +15,41 @@ import kwony.allweather.maintab.MainViewModel
 class AssetsFragment: Fragment(R.layout.fragment_assets) {
 
     private lateinit var assetBinding: FragmentAssetsBinding
+    private lateinit var adapter : AssetAdapter
 
     private val mainViewModel: MainViewModel by activityViewModels()
+
+    private val adapterClickListener: AssetAdapterClickListener = object : AssetAdapterClickListener {
+        override fun editClick(assetMeta: AssetMeta) {
+            TODO("Not yet implemented")
+        }
+
+        override fun deleteClick(assetMeta: AssetMeta) {
+            TODO("Not yet implemented")
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        assetBinding = FragmentAssetsBinding.bind(view)
-
-        init()
+        init(view)
+        observe()
     }
 
-    fun init() {
-        assetBinding.frAssetRv
+    private fun init(view: View) {
+        adapter = AssetAdapter(adapterClickListener)
+        assetBinding = FragmentAssetsBinding.bind(view)
+
+        assetBinding.frAssetRv.adapter = adapter
 
         assetBinding.frAssetAdd.setOnClickListener {
             // todo: 추가하는거 만들어야함
         }
     }
 
-    fun observe() {
+    private fun observe() {
         mainViewModel.currentAssetList.observe(viewLifecycleOwner, Observer {
-
+            adapter.submitItems(it)
         })
     }
 
