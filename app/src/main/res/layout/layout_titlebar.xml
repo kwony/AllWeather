@@ -12,8 +12,7 @@
         android:layout_marginStart="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:src="@drawable/ic_close"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <View
         android:id="@+id/layout_title_bar_left_iv_click"
@@ -31,8 +30,7 @@
         android:layout_marginEnd="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:src="@drawable/ic_close"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <View
         android:id="@+id/layout_title_bar_right_iv_click"

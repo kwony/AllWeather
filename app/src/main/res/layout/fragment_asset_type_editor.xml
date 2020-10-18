@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/shape_editor_dialog_enter_background"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <kwony.allweather.common.TitleBar
+        android:id="@+id/fr_asset_type_editor_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:drawable_right="@drawable/ic_close"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="6dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/fr_asset_type_editor_name_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/common_name"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="#000" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical"
+            android:background="@drawable/shape_editor_dialog_input_background">
+
+            <EditText
+                android:layout_marginVertical="8dp"
+                android:layout_marginHorizontal="8dp"
+                android:id="@+id/fr_asset_type_editor_name_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:hint="@string/asset_type_editor_name_hint"
+                android:textSize="13sp"
+                android:background="@android:color/transparent"
+                app:layout_constraintTop_toBottomOf="@id/fr_asset_editor_name_desc"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <TextView
+            android:id="@+id/fr_asset_type_editor_weight_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/common_weight"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="#000" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical"
+            android:background="@drawable/shape_editor_dialog_input_background">
+
+            <EditText
+                android:layout_marginVertical="8dp"
+                android:layout_marginHorizontal="8dp"
+                android:id="@+id/fr_asset_type_editor_weight_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:hint="@string/asset_type_editor_weight_hint"
+                android:textSize="13sp"
+                android:background="@android:color/transparent"
+                app:layout_constraintTop_toBottomOf="@id/fr_asset_editor_name_desc"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <TextView
+            android:id="@+id/fr_asset_type_editor_done"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/common_add"
+            android:paddingVertical="12dp"
+            android:background="@drawable/shape_editor_dialog_enter_confirm"
+            />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

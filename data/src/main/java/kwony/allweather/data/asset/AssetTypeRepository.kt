@@ -12,7 +12,11 @@ class AssetTypeRepository @Inject constructor() {
         return assetTypeDao.getEntitiesFromAccount(accountId)
     }
 
-    fun createAssetType(assetTypeMeta: AssetTypeMeta): Long {
+    fun getAssetTypeMeta(assetTypeId: Long): Flowable<AssetTypeMeta> {
+        return assetTypeDao.getEntity(assetTypeId)
+    }
+
+    fun upsert(assetTypeMeta: AssetTypeMeta): Long {
         return assetTypeDao.upsert(assetTypeMeta)
     }
 

@@ -27,6 +27,16 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="AppTheme.Dialog.Light.Enter" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowMinWidthMinor">77%</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:textViewStyle">@style/AppTheme.TextViewStyle</item>
+    </style>
+
     <style name="AppTheme.Dialog.Light.BottomUp" parent="AppTheme.Dialog.Light">
         <item name="android:windowAnimationStyle">@style/AppTheme.Dialog.BottomUpFadeAnimation</item>
     </style>
@@ -34,6 +44,10 @@
     <style name="AppTheme.Dialog.BottomUpFadeAnimation">
         <item name="android:windowEnterAnimation">@anim/dialog_bottom_up_enter</item>
         <item name="android:windowExitAnimation">@anim/dialog_bottom_up_exit</item>
+    </style>
+
+    <style name="AppTheme.TextViewStyle" parent="android:Widget.TextView">
+        <item name="android:includeFontPadding">false</item>
     </style>
 
 </resources>

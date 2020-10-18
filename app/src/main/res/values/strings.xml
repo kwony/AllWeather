@@ -15,13 +15,22 @@
     <string name="common_name"><![CDATA[이름]]></string>
     <string name="common_eval_amount"><![CDATA[평가 금액]]></string>
     <string name="common_type"><![CDATA[구분]]></string>
+    <string name="common_weight"><![CDATA[비중]]></string>
+    <string name="common_add"><![CDATA[추가하기]]></string>
+    <string name="common_edit"><![CDATA[수정하기]]></string>
+    <string name="common_delete"><![CDATA[삭제하기]]></string>
 
     <string name="asset_name_hint"><![CDATA[- 종목 이름을 입력해주세요 ex) 삼성전자]]></string>
     <string name="asset_amount_hint"><![CDATA[- 종목 평가 금액을 입력해주세요 ex) 1,000,000원 ]]></string>
     <string name="asset_type_hint"><![CDATA[- 자산의 종류를 선택해주세요]]></string>
 
+    <string name="asset_type_editor_name_hint"><![CDATA[자산 배분 종류를 입력해주세요 ex) 주식, 장기채권]]></string>
+    <string name="asset_type_editor_weight_hint"><![CDATA[자산의 포트폴리오 비중을 입력해주세요]]></string>
+
     <string name="account_name_hint"><![CDATA[- 계좌 이름을 입력해주세]]></string>
     <string name="account_type_hint"><![CDATA[- 자산 배분 종류와 비율을 설정해주세요]]></string>
+
+    <string name="account_asset_type_add"><![CDATA[자산 종류를 추가해보세요]]></string>
 
     <string name="type_stock"><![CDATA[주식]]></string>
     <string name="type_short_bond"><![CDATA[단기채권]]></string>

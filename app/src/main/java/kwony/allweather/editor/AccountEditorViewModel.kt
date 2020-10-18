@@ -9,6 +9,7 @@ import androidx.lifecycle.SavedStateHandle
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kwony.allweather.arch.notifyChange
 import kwony.allweather.data.account.AccountMeta
 import kwony.allweather.data.account.AccountRepository
 import kwony.allweather.data.asset.AssetTypeMeta
@@ -26,7 +27,7 @@ class AccountEditorViewModel @ViewModelInject constructor(
 
     val editingAccountMeta: MutableLiveData<AccountMeta> = MutableLiveData()
 
-    val assetTypes: MutableLiveData<List<AssetTypeMeta>> = MutableLiveData()
+    val assetTypes: MutableLiveData<ArrayList<AssetTypeMeta>> = MutableLiveData()
 
     private var creationMode: Boolean = false
 
@@ -46,7 +47,7 @@ class AccountEditorViewModel @ViewModelInject constructor(
 
         compositeDisposable.add(
             assetTypeRepository.getAssetTypeMetaList(accountId)
-                .doOnNext { assetTypes.value = it }
+                .doOnNext { assetTypes.value = ArrayList<AssetTypeMeta>().apply { addAll(it) } }
                 .subscribeOn(Schedulers.io())
                 .subscribe()
         )
@@ -56,7 +57,7 @@ class AccountEditorViewModel @ViewModelInject constructor(
         compositeDisposable.add(
             Single.fromCallable {
                 val accountMeta = AccountMeta(
-                    accountId = if (creationMode) -1L else editingAccountMeta.value!!.accountId,
+                    accountId = if (creationMode) 0L else editingAccountMeta.value!!.accountId,
                     accountName = name
                 )
                 accountRepository.upsert(accountMeta)
@@ -67,6 +68,22 @@ class AccountEditorViewModel @ViewModelInject constructor(
                 }
                 .subscribe()
         )
+    }
+
+    fun addAssetType(assetTypeMeta: AssetTypeMeta) {
+        assetTypeMeta.accountId = if (creationMode) 0L else editingAccountMeta.value!!.accountId
+
+        assetTypes.value?.add(assetTypeMeta)
+        assetTypes.notifyChange()
+    }
+
+    fun editAssetType(assetTypeMeta: AssetTypeMeta) {
+        assetTypes.value?.find { it.assetTypeId == assetTypeMeta.assetTypeId }?.apply {
+            this.targetWeight = assetTypeMeta.targetWeight
+            this.assetTypeName = assetTypeMeta.assetTypeName
+        }
+
+        assetTypes.notifyChange()
     }
 
     override fun onCleared() {

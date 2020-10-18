@@ -18,3 +18,7 @@ fun <T> LiveData<T>.toObservable(): Observable<T> {
         LiveDataReactiveStreams.toPublisher(ALWAYS_ON, this)
     }
 }
+
+fun <T> MutableLiveData<T>.notifyChange() {
+    this.value = this.value
+}

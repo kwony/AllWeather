@@ -10,12 +10,12 @@ import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_account_editor.*
 import kwony.allweather.R
+import kwony.allweather.common.TypeAdapterItem
+import kwony.allweather.data.asset.AssetTypeMeta
+import kwony.allweather.utils.FragmentUtils
 
 @AndroidEntryPoint
 class AccountEditorDialogFragment: DialogFragment() {
-
-    private val accountEditorViewModel: AccountEditorViewModel by viewModels()
-
     companion object {
         private const val KEY_CREATION_MODE = "key_creation_mode"
         private const val KEY_ACCOUNT_ID = "key_account_id"
@@ -33,6 +33,51 @@ class AccountEditorDialogFragment: DialogFragment() {
         }
     }
 
+    private val accountEditorViewModel: AccountEditorViewModel by viewModels()
+
+    private lateinit var adapter: AssetEditorTypeAdapter
+
+    private val listener = object: AccountAssetTypeAdapterListener {
+        override fun add() {
+            AssetTypeEditorDialogFragment.newInstance(true).apply {
+                doneCallback = { assetTypeMeta ->
+                    assetTypeMeta?.run {
+                        accountEditorViewModel.addAssetType(this)
+                    }
+                }
+            }.run {
+                FragmentUtils.addFragmentIfNotExists(
+                    childFragmentManager,
+                    "assetTypeEditorFragment",
+                    this,
+                    true
+                )
+            }
+        }
+
+        override fun edit(assetTypeMeta: AssetTypeMeta) {
+            AssetTypeEditorDialogFragment.newInstance(false, assetTypeMeta).apply {
+                doneCallback = { assetTypeMeta ->
+                    assetTypeMeta?.run {
+                        accountEditorViewModel.editAssetType(this)
+                    }
+                }
+
+            }.run {
+                FragmentUtils.addFragmentIfNotExists(
+                    childFragmentManager,
+                    "assetTypeEditorFragment",
+                    this,
+                    true
+                )
+            }
+        }
+
+        override fun delete(assetTypeMeta: AssetTypeMeta) {
+
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.AppTheme_Dialog_Light_BottomUp)
@@ -41,12 +86,13 @@ class AccountEditorDialogFragment: DialogFragment() {
         observe()
     }
 
-
     private fun init() {
         val creationMode = arguments?.getBoolean(KEY_CREATION_MODE)?: true
         val accountId = arguments?.getLong(KEY_ACCOUNT_ID)?: 0L
 
         accountEditorViewModel.init(creationMode, accountId)
+
+        adapter = AssetEditorTypeAdapter(listener)
 
         fr_account_editor_titlebar.leftClick.setOnClickListener {
             dismissAllowingStateLoss()
@@ -58,8 +104,17 @@ class AccountEditorDialogFragment: DialogFragment() {
     }
 
     private fun observe() {
-        accountEditorViewModel.assetTypes.observe(viewLifecycleOwner, Observer {
+        accountEditorViewModel.assetTypes.observe(viewLifecycleOwner, Observer { assetTypes ->
+            val items = if (assetTypes.size < 10) {
+                ArrayList<TypeAdapterItem<AssetTypeViewType>>().apply {
+                    addAll(assetTypes.map { AssetTypeAdapterItem(it) })
+                    add(AssetTypeAdapterEmptyItem())
+                }.toList()
+            } else {
+                assetTypes.map { AssetTypeAdapterItem(it) }
+            }
 
+            adapter.submitItems(items)
         })
 
         accountEditorViewModel.editingAccountMeta.observe(viewLifecycleOwner, Observer {
@@ -67,10 +122,7 @@ class AccountEditorDialogFragment: DialogFragment() {
         })
     }
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_asset_editor, container, false)
+        return inflater.inflate(R.layout.fragment_account_editor, container, false)
     }
-
-
 }
