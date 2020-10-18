@@ -15,4 +15,8 @@ class AssetTypeRepository @Inject constructor() {
     fun createAssetType(assetTypeMeta: AssetTypeMeta): Long {
         return assetTypeDao.upsert(assetTypeMeta)
     }
+
+    fun deleteByAccountId(accountId: Long) {
+        return assetTypeDao.deleteByAccountId(accountId)
+    }
 }

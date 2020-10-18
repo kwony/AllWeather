@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/vh_asset_name"
+            android:id="@+id/vh_assettype_name"
             android:layout_marginTop="15dp"
             android:layout_marginStart="15dp"
             android:layout_width="0dp"
@@ -22,32 +22,32 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="삼성전자" />
+            tools:text="장기채권" />
 
         <TextView
-            android:id="@+id/vh_asset_amount"
+            android:id="@+id/vh_assettype_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="15dp"
             android:textColor="#141414"
-            app:layout_constraintStart_toStartOf="@id/vh_asset_name"
-            app:layout_constraintTop_toBottomOf="@id/vh_asset_name"
+            app:layout_constraintStart_toStartOf="@id/vh_assettype_name"
+            app:layout_constraintTop_toBottomOf="@id/vh_assettype_name"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="1,102,000 원"/>
+            tools:text="30%"/>
 
         <ImageView
-            android:id="@+id/vh_asset_edit"
+            android:id="@+id/vh_assettype_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
             android:src="@drawable/ic_edit"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/vh_asset_delete" />
+            app:layout_constraintEnd_toStartOf="@id/vh_assettype_delete" />
 
         <ImageView
-            android:id="@+id/vh_asset_delete"
+            android:id="@+id/vh_assettype_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"

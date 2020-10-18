@@ -25,6 +25,7 @@ class AssetDefaultViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) 
     }
 
     fun bind(assetMeta: AssetMeta, listener: AssetAdapterClickListener?) {
+        binding = ViewholderAssetDefaultBinding()
         binding.vhAssetName.text = assetMeta.assetName
         binding.vhAssetAmount.text = NumberFormat.getInstance(Locale.getDefault()).format(assetMeta.assetAmount)
 

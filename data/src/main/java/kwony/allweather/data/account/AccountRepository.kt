@@ -15,4 +15,8 @@ class AccountRepository @Inject constructor() {
     fun getAccountMetaList(): Flowable<List<AccountMeta>> {
         return accountDao.getEntities()
     }
+
+    fun upsert(accountMeta: AccountMeta): Long {
+        return accountDao.upsert(accountMeta)
+    }
 }

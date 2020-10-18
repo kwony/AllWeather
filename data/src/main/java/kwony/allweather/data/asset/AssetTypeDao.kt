@@ -19,4 +19,7 @@ interface AssetTypeDao {
 
     @Query("delete from assettypemeta where assetTypeId = :assetTypeId")
     fun delete(assetTypeId: Long)
+
+    @Query("delete from assettypemeta where accountId = :accountId")
+    fun deleteByAccountId(accountId: Long)
 }

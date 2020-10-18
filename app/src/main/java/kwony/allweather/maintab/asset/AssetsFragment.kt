@@ -32,7 +32,7 @@ class AssetsFragment: Fragment(R.layout.fragment_assets) {
         }
 
         override fun deleteClick(assetMeta: AssetMeta) {
-
+            // todo: delete 하기
         }
     }
 
@@ -63,5 +63,4 @@ class AssetsFragment: Fragment(R.layout.fragment_assets) {
             adapter.submitItems(it)
         })
     }
-
 }
