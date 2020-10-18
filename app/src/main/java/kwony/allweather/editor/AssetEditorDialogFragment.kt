@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import androidx.core.view.children
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_asset_editor.*
 import kwony.allweather.R
+import kwony.allweather.data.asset.AssetTypeMeta
 
 @AndroidEntryPoint
 class AssetEditorDialogFragment: DialogFragment() {
@@ -40,13 +42,31 @@ class AssetEditorDialogFragment: DialogFragment() {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.AppTheme_Dialog_Light_BottomUp)
 
-
-
+        init()
         observe()
     }
 
-    private fun observe() {
+    private fun init() {
+        val creationMode = arguments?.getBoolean(KEY_CREATION_MODE)?: true
+        val accountId = arguments?.getLong(KEY_ACCOUNT_ID)?: 0L
+        val assetId = arguments?.getLong(KEY_ASSET_ID)?: 0L
 
+        assetEditorViewModel.init(creationMode = creationMode, accountId = accountId, assetId = assetId)
+
+        fr_asset_editor_titlebar.leftClick.setOnClickListener {
+            dismissAllowingStateLoss()
+        }
+
+        fr_asset_editor_titlebar.rightClick.setOnClickListener {
+            assetEditorViewModel.done(
+                name = fr_asset_editor_name_desc.text.toString(),
+                amount = fr_asset_editor_amount_edit.text.toString().toInt(),
+                typeId = assetEditorViewModel.assetTypes.value!![getCheckedButtonIndex()].assetTypeId
+            )
+        }
+    }
+
+    private fun observe() {
         assetEditorViewModel.assetTypes.observe(viewLifecycleOwner, Observer {
             it.forEach {
                 val radioButton = RadioButton(requireContext())
@@ -59,6 +79,11 @@ class AssetEditorDialogFragment: DialogFragment() {
             fr_asset_editor_name_edit.setText(it.assetName)
             fr_asset_editor_amount_edit.setText(it.assetAmount)
         })
+    }
+
+    private fun getCheckedButtonIndex(): Int {
+        return fr_asset_editor_type_group.children.filter { it is RadioButton }
+            .indexOfFirst { it.id == fr_asset_editor_type_group.checkedRadioButtonId }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

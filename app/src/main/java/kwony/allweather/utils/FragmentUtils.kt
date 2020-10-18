@@ -16,4 +16,28 @@ object FragmentUtils {
             .setPrimaryNavigationFragment(fragment)
             .commitNowAllowingStateLoss()
     }
+
+    fun addFragmentIfNotExists(
+        fragmentManager: FragmentManager,
+        tag: String?,
+        fragment: Fragment,
+        now: Boolean
+    ): Boolean {
+        if (hasFragment(fragmentManager, tag)) {
+            return false
+        }
+        val fragmentTransaction = fragmentManager
+            .beginTransaction()
+            .add(fragment, tag)
+        if (now) {
+            fragmentTransaction.commitNowAllowingStateLoss()
+        } else {
+            fragmentTransaction.commitAllowingStateLoss()
+        }
+        return true
+    }
+
+    private fun hasFragment(fragmentManager: FragmentManager, tag: String?): Boolean {
+        return fragmentManager.findFragmentByTag(tag) != null
+    }
 }

@@ -18,6 +18,7 @@ class TitleBar @JvmOverloads constructor(
 ): ConstraintLayout(context, attrs, defStyleAttr) {
 
     val leftClick: View get() = layout_title_bar_left_iv_click
+    val rightClick: View get() = layout_title_bar_right_iv_click
 
     init {
         LayoutInflater.from(context).inflate(R.layout.layout_titlebar, this)

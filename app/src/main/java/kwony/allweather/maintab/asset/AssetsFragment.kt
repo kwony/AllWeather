@@ -9,7 +9,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kwony.allweather.R
 import kwony.allweather.data.asset.AssetMeta
 import kwony.allweather.databinding.FragmentAssetsBinding
+import kwony.allweather.editor.AssetEditorDialogFragment
 import kwony.allweather.maintab.MainViewModel
+import kwony.allweather.utils.FragmentUtils
 
 @AndroidEntryPoint
 class AssetsFragment: Fragment(R.layout.fragment_assets) {
@@ -21,11 +23,16 @@ class AssetsFragment: Fragment(R.layout.fragment_assets) {
 
     private val adapterClickListener: AssetAdapterClickListener = object : AssetAdapterClickListener {
         override fun editClick(assetMeta: AssetMeta) {
-            TODO("Not yet implemented")
+            FragmentUtils.addFragmentIfNotExists(
+                childFragmentManager,
+                "assetEditorFragment",
+                AssetEditorDialogFragment.newInstance(true, mainViewModel.currentAccountId.value!!, assetId = assetMeta.assetId), // todo: accountId 셋팅해주
+                true
+            )
         }
 
         override fun deleteClick(assetMeta: AssetMeta) {
-            TODO("Not yet implemented")
+
         }
     }
 
@@ -43,7 +50,11 @@ class AssetsFragment: Fragment(R.layout.fragment_assets) {
         assetBinding.frAssetRv.adapter = adapter
 
         assetBinding.frAssetAdd.setOnClickListener {
-            // todo: 추가하는거 만들어야함
+            FragmentUtils.addFragmentIfNotExists(childFragmentManager,
+                "assetEditorFragment",
+                AssetEditorDialogFragment.newInstance(true, mainViewModel.currentAccountId.value!!),
+                true
+            )
         }
     }
 
