@@ -27,6 +27,9 @@ class TitleBar @JvmOverloads constructor(
         val drawableLeft = array.getDrawable(R.styleable.TitleBar_drawable_left)
         val drawableLeftMargin = array.getDimensionPixelSize(R.styleable.TitleBar_drawable_left_margin, DimensionUtils.dp2px(context, 12f).toInt())
 
+        val drawableRight = array.getDrawable(R.styleable.TitleBar_drawable_right)
+        val drawableRightMargin = array.getDimensionPixelSize(R.styleable.TitleBar_drawable_right_margin, DimensionUtils.dp2px(context, 12f).toInt())
+
         val title = array.getString(R.styleable.TitleBar_title)
         val titleSize = array.getDimensionPixelSize(R.styleable.TitleBar_title_size, DimensionUtils.dp2px(context, 17f).toInt())
         val titleColor = array.getColor(R.styleable.TitleBar_title_color, Color.BLACK)
@@ -39,5 +42,8 @@ class TitleBar @JvmOverloads constructor(
 
         drawableLeft?.let { layout_titlebar_left_iv.setImageDrawable(drawableLeft) }
         drawableLeftMargin.let { (layout_titlebar_left_iv.layoutParams as MarginLayoutParams).apply { marginStart = it } }
+
+        drawableRight?.let { layout_titlebar_right_iv.setImageDrawable(drawableRight) }
+        drawableRightMargin.let { (layout_titlebar_right_iv.layoutParams as MarginLayoutParams).apply { marginEnd = it } }
     }
 }

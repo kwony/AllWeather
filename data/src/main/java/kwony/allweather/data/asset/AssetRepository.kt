@@ -8,11 +8,15 @@ import javax.inject.Singleton
 class AssetRepository @Inject constructor() {
     @Inject lateinit var assetDao: AssetDao
 
+    fun getAssetMeta(assetId: Long): Flowable<AssetMeta> {
+        return assetDao.getEntity(assetId)
+    }
+
     fun getAssetMetaList(accountId: Long): Flowable<List<AssetMeta>> {
         return assetDao.getEntitiesFromAccount(accountId)
     }
 
-    fun createAssetMeta(assetMeta: AssetMeta): Long {
+    fun upsert(assetMeta: AssetMeta): Long {
         return assetDao.upsert(assetMeta)
     }
 }

@@ -18,7 +18,7 @@
 
     <string name="asset_name_hint"><![CDATA[- 종목 이름을 입력해주세요 ex) 삼성전자]]></string>
     <string name="asset_amount_hint"><![CDATA[- 종목 평가 금액을 입력해주세요 ex) 1,000,000원 ]]></string>
-    <string name="asset_type_hint"><![CDATA[- 종목 구분을 선택해주세요]]></string>
+    <string name="asset_type_hint"><![CDATA[- 자산의 종류를 선택해주세요]]></string>
 
     <string name="type_domestic_stock"><![CDATA[국내 주식]]></string>
     <string name="type_domestic_bond"><![CDATA[국내 채권]]></string>

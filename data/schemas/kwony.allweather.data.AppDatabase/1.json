@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "cd2b89ce121f763c645a0f242fa2def8",
+    "identityHash": "4c475757bce35bf35afc79709b538e34",
     "entities": [
       {
         "tableName": "AssetMeta",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`assetId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `accountId` INTEGER NOT NULL, `assetName` TEXT NOT NULL, `assetAmount` INTEGER NOT NULL, `assetType` INTEGER NOT NULL, `domesticStockRate` REAL NOT NULL, `domesticBondRate` REAL NOT NULL, `advancedStockRate` REAL NOT NULL, `advancedBondRate` REAL NOT NULL, `emergingStockRate` REAL NOT NULL, `emergingBondRate` REAL NOT NULL, `goldRate` REAL NOT NULL, `silverRate` REAL NOT NULL, `commodityRate` REAL NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`assetId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `accountId` INTEGER NOT NULL, `assetName` TEXT NOT NULL, `assetAmount` INTEGER NOT NULL, `assetTypeId` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "assetId",
@@ -33,69 +33,53 @@
             "notNull": true
           },
           {
-            "fieldPath": "assetType",
-            "columnName": "assetType",
+            "fieldPath": "assetTypeId",
+            "columnName": "assetTypeId",
             "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "domesticStockRate",
-            "columnName": "domesticStockRate",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "domesticBondRate",
-            "columnName": "domesticBondRate",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "advancedStockRate",
-            "columnName": "advancedStockRate",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "advancedBondRate",
-            "columnName": "advancedBondRate",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "emergingStockRate",
-            "columnName": "emergingStockRate",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "emergingBondRate",
-            "columnName": "emergingBondRate",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "goldRate",
-            "columnName": "goldRate",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "silverRate",
-            "columnName": "silverRate",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "commodityRate",
-            "columnName": "commodityRate",
-            "affinity": "REAL",
             "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
             "assetId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "AssetTypeMeta",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`assetTypeId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `accountId` INTEGER NOT NULL, `assetTypeName` TEXT NOT NULL, `targetWeight` REAL NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "assetTypeId",
+            "columnName": "assetTypeId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accountId",
+            "columnName": "accountId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "assetTypeName",
+            "columnName": "assetTypeName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "targetWeight",
+            "columnName": "targetWeight",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "assetTypeId"
           ],
           "autoGenerate": true
         },
@@ -185,7 +169,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"cd2b89ce121f763c645a0f242fa2def8\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"4c475757bce35bf35afc79709b538e34\")"
     ]
   }
 }
