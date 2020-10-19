@@ -138,10 +138,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:background="@drawable/shape_editor_dialog_input_background">
-
-
                 </RadioGroup>
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.constraintlayout.widget.ConstraintLayout>
