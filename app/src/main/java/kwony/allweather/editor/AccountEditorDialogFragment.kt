@@ -81,6 +81,10 @@ class AccountEditorDialogFragment: DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.AppTheme_Dialog_Light_BottomUp)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         init()
         observe()
@@ -94,11 +98,17 @@ class AccountEditorDialogFragment: DialogFragment() {
 
         adapter = AssetEditorTypeAdapter(listener)
 
-        fr_account_editor_titlebar.leftClick.setOnClickListener {
+        fr_account_editor_titlebar.leftIvClick.setOnClickListener {
             dismissAllowingStateLoss()
         }
 
-        fr_account_editor_titlebar.rightClick.setOnClickListener {
+        fr_account_editor_titlebar.rightText.text = if (creationMode) {
+            requireContext().getString(R.string.common_add)
+        } else {
+            requireContext().getString(R.string.common_edit)
+        }
+
+        fr_account_editor_titlebar.rightText.setOnClickListener {
             accountEditorViewModel.done(name = fr_account_editor_name_edit.text.toString())
         }
     }

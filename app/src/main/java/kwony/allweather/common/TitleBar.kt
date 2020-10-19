@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import kotlinx.android.synthetic.main.layout_titlebar.view.*
 import kwony.allweather.R
@@ -17,8 +18,10 @@ class TitleBar @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ): ConstraintLayout(context, attrs, defStyleAttr) {
 
-    val leftClick: View get() = layout_title_bar_left_iv_click
-    val rightClick: View get() = layout_title_bar_right_iv_click
+    val leftIvClick: View get() = layout_title_bar_left_iv_click
+    val rightIvClick: View get() = layout_title_bar_right_iv_click
+
+    val rightText: TextView get() = layout_titlebar_right_text
 
     init {
         LayoutInflater.from(context).inflate(R.layout.layout_titlebar, this)
@@ -35,11 +38,20 @@ class TitleBar @JvmOverloads constructor(
         val titleSize = array.getDimensionPixelSize(R.styleable.TitleBar_title_size, DimensionUtils.dp2px(context, 17f).toInt())
         val titleColor = array.getColor(R.styleable.TitleBar_title_color, Color.BLACK)
 
+        val textRight = array.getString(R.styleable.TitleBar_text_right)
+        val textRightSize = array.getDimensionPixelSize(R.styleable.TitleBar_text_right_size, DimensionUtils.dp2px(context, 14f).toInt())
+
         array.recycle()
 
         title?.let { layout_titlebar_title.text = title }
         titleSize.let { layout_titlebar_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, it.toFloat()) }
         titleColor.let { layout_titlebar_title.setTextColor(it) }
+
+        textRight?.let {
+            layout_titlebar_right_text.text = it
+            layout_titlebar_right_text.visibility = View.VISIBLE
+        }
+        textRightSize.let { layout_titlebar_right_text.setTextSize(TypedValue.COMPLEX_UNIT_PX, it.toFloat())}
 
         drawableLeft?.let { layout_titlebar_left_iv.setImageDrawable(drawableLeft) }
         drawableLeftMargin.let { (layout_titlebar_left_iv.layoutParams as MarginLayoutParams).apply { marginStart = it } }

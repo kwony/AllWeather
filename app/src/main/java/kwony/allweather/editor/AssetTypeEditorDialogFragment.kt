@@ -29,8 +29,11 @@ class AssetTypeEditorDialogFragment: DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setStyle(STYLE_NO_TITLE, R.style.AppTheme_Dialog_Light_Enter)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         init()
     }

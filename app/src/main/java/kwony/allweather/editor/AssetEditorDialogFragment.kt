@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_asset_editor.*
 import kwony.allweather.R
-import kwony.allweather.data.asset.AssetTypeMeta
 
 @AndroidEntryPoint
 class AssetEditorDialogFragment: DialogFragment() {
@@ -41,6 +40,10 @@ class AssetEditorDialogFragment: DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.AppTheme_Dialog_Light_BottomUp)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         init()
         observe()
@@ -53,11 +56,16 @@ class AssetEditorDialogFragment: DialogFragment() {
 
         assetEditorViewModel.init(creationMode = creationMode, accountId = accountId, assetId = assetId)
 
-        fr_asset_editor_titlebar.leftClick.setOnClickListener {
+        fr_asset_editor_titlebar.leftIvClick.setOnClickListener {
             dismissAllowingStateLoss()
         }
 
-        fr_asset_editor_titlebar.rightClick.setOnClickListener {
+        fr_asset_editor_titlebar.rightIvClick.setOnClickListener {
+            if (fr_asset_editor_amount_desc.text.isBlank() || fr_asset_editor_name_desc.text.isBlank()) {
+                // error toast
+                return@setOnClickListener;
+            }
+
             assetEditorViewModel.done(
                 name = fr_asset_editor_name_desc.text.toString(),
                 amount = fr_asset_editor_amount_edit.text.toString().toInt(),
