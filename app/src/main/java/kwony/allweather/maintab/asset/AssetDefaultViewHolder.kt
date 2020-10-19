@@ -25,7 +25,10 @@ class AssetDefaultViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) 
     fun bind(item: AssetAdapterItem, listener: AssetAdapterClickListener?) {
         binding = ViewholderAssetDefaultBinding.bind(itemView)
         binding.vhAssetName.text = item.assetName
-        binding.vhAssetAmount.text = NumberFormat.getInstance(Locale.getDefault()).format(item.assetAmount)
+        binding.vhAssetAmount.text = String.format(
+            itemView.context.getString(R.string.common_won),
+            NumberFormat.getInstance(Locale.getDefault()).format(item.assetAmount)
+        )
 
         RxView.clicks(binding.vhAssetEdit)
             .doOnNext { listener?.editClick(item.assetMeta) }

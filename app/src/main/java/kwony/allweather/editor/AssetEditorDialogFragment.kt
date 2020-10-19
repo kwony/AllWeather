@@ -60,6 +60,12 @@ class AssetEditorDialogFragment: DialogFragment() {
             dismissAllowingStateLoss()
         }
 
+        fr_asset_editor_titlebar.rightText.text = if (creationMode) {
+            requireContext().getString(R.string.common_add)
+        } else {
+            requireContext().getString(R.string.common_edit)
+        }
+
         fr_asset_editor_titlebar.rightText.setOnClickListener {
             if (fr_asset_editor_amount_desc.text.isBlank() || fr_asset_editor_name_desc.text.isBlank()
                 || assetEditorViewModel.assetTypes.value!!.getOrNull(getCheckedButtonIndex()) == null) {
@@ -82,9 +88,8 @@ class AssetEditorDialogFragment: DialogFragment() {
             list.forEach {
                 val radioButton = RadioButton(requireContext())
                 radioButton.text = it.assetTypeName
-                radioButton.isChecked = it.assetTypeId == currentAssetTypeId
-
                 fr_asset_editor_type_group.addView(radioButton)
+                radioButton.isChecked = it.assetTypeId == currentAssetTypeId
             }
         })
 
