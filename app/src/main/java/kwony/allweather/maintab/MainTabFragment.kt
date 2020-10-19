@@ -2,11 +2,13 @@ package kwony.allweather.maintab
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_main_tab.*
 import kwony.allweather.R
 import kwony.allweather.databinding.FragmentMainTabBinding
 
@@ -36,19 +38,39 @@ class MainTabFragment: Fragment(R.layout.fragment_main_tab) {
             this.submitItems(adapterItems)
         }
 
-        binding.frManageViewpager.adapter = adapter
-        binding.frManageViewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        binding.frManageViewpager.isUserInputEnabled = false
+        binding.frMaintabViewpager.adapter = adapter
+        binding.frMaintabViewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        binding.frMaintabViewpager.isUserInputEnabled = false
 
-        binding.frManageAssets.setOnClickListener {
-            binding.frManageViewpager.setCurrentItem(assetPosition, false)
+        binding.frMaintabAssets.setOnClickListener {
+            binding.frMaintabViewpager.setCurrentItem(assetPosition, false)
+
+            markSelectedText(fr_maintab_assets_name)
+            markUnSelectedText(fr_maintab_graph_name)
+            markUnSelectedText(fr_maintab_manage_name)
         }
-        binding.frManageGraph.setOnClickListener {
-            binding.frManageViewpager.setCurrentItem(graphPosition, false)
+        binding.frMaintabGraph.setOnClickListener {
+            binding.frMaintabViewpager.setCurrentItem(graphPosition, false)
+
+            markUnSelectedText(fr_maintab_assets_name)
+            markSelectedText(fr_maintab_graph_name)
+            markUnSelectedText(fr_maintab_manage_name)
         }
-        binding.frManageChart.setOnClickListener {
-            binding.frManageViewpager.setCurrentItem(chartPosition, false)
+        binding.frMaintabManage.setOnClickListener {
+            binding.frMaintabViewpager.setCurrentItem(chartPosition, false)
+
+            markUnSelectedText(fr_maintab_assets_name)
+            markUnSelectedText(fr_maintab_graph_name)
+            markSelectedText(fr_maintab_manage_name)
         }
 
+    }
+
+    private fun markSelectedText(textView: TextView) {
+        textView.setTextColor(0xff141414.toInt())
+    }
+
+    private fun markUnSelectedText(textView: TextView) {
+        textView.setTextColor(0xff989898.toInt())
     }
 }

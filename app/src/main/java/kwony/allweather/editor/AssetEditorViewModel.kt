@@ -48,6 +48,13 @@ class AssetEditorViewModel @ViewModelInject constructor(
                     .subscribeOn(Schedulers.io())
                     .subscribe()
             )
+        } else {
+            compositeDisposable.add(
+                assetTypeRepository.getAssetTypeMetaList(accountId)
+                    .doOnNext { assetTypes.setValueSafely(it) }
+                    .subscribeOn(Schedulers.io())
+                    .subscribe()
+            )
         }
     }
 

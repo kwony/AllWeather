@@ -83,7 +83,7 @@ class AssetEditorDialogFragment: DialogFragment() {
 
     private fun observe() {
         assetEditorViewModel.assetTypes.observe(viewLifecycleOwner, Observer { list ->
-            val currentAssetTypeId = assetEditorViewModel.editingAssetMeta.value!!.assetTypeId
+            val currentAssetTypeId = assetEditorViewModel.editingAssetMeta.value?.assetTypeId?: 0L
 
             list.forEach {
                 val radioButton = RadioButton(requireContext())

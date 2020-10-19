@@ -19,7 +19,7 @@
     <string name="common_add"><![CDATA[추가하기]]></string>
     <string name="common_edit"><![CDATA[수정하기]]></string>
     <string name="common_delete"><![CDATA[삭제하기]]></string>
-    <string name="common_won"><![CDATA[%s원]]></string>
+    <string name="common_won"><![CDATA[%s]]></string>
 
     <string name="asset_name_hint"><![CDATA[- 종목 이름을 입력해주세요 ex) 삼성전자]]></string>
     <string name="asset_amount_hint"><![CDATA[- 종목 평가 금액을 입력해주세요 ex) 1,000,000원 ]]></string>
@@ -38,5 +38,9 @@
     <string name="type_long_bond"><![CDATA[장기채권]]></string>
     <string name="type_gold"><![CDATA[금]]></string>
     <string name="type_commodity"><![CDATA[원자재]]></string>
+
+    <string name="main_tab_bottom_assets"><![CDATA[종목]]></string>
+    <string name="main_tab_bottom_graph"><![CDATA[그래프]]></string>
+    <string name="main_tab_bottom_manage"><![CDATA[관리]]></string>
 
 </resources>
