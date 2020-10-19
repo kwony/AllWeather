@@ -11,6 +11,7 @@ import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.BehaviorSubject
 import kwony.allweather.AllWeatherApp
 import kwony.allweather.arch.setValueSafely
 import kwony.allweather.arch.toObservable
@@ -20,6 +21,7 @@ import kwony.allweather.data.asset.AssetMeta
 import kwony.allweather.data.asset.AssetRepository
 import kwony.allweather.data.asset.AssetTypeRepository
 import kwony.allweather.model.AssetTypeDefaults
+import kwony.allweather.utils.Logger
 import javax.inject.Inject
 
 class MainViewModel @ViewModelInject constructor(
@@ -30,7 +32,7 @@ class MainViewModel @ViewModelInject constructor(
     private val assetTypeRepository: AssetTypeRepository
 ): AndroidViewModel(application) {
 
-    val currentAccountId: MutableLiveData<Long> = MutableLiveData()
+    private val currentAccountId: BehaviorSubject<Long> = BehaviorSubject.create()
     val currentAccount: MutableLiveData<AccountMeta> = MutableLiveData()
     val currentAssetList: MutableLiveData<List<AssetMeta>> = MutableLiveData()
 
@@ -40,7 +42,7 @@ class MainViewModel @ViewModelInject constructor(
 
     init {
         compositeDisposable.addAll(
-            currentAccountId.toObservable().distinctUntilChanged()
+            currentAccountId
                 .flatMap { accountId ->
                     assetRepository.getAssetMetaList(accountId).toObservable()
                         .doOnNext { currentAssetList.setValueSafely(it) }
@@ -48,10 +50,14 @@ class MainViewModel @ViewModelInject constructor(
                 .subscribeOn(Schedulers.io())
                 .subscribe(),
 
-            currentAccountId.toObservable().distinctUntilChanged()
+            currentAccountId
                 .flatMap { accountId ->
+                    Logger.d("accountId: $accountId")
                     accountRepository.getAccountMeta(accountId).toObservable()
-                        .doOnNext { currentAccount.setValueSafely(it) }
+                        .doOnNext {
+                            Logger.d("accountMeta: $it")
+                            currentAccount.setValueSafely(it)
+                        }
                 }
                 .subscribeOn(Schedulers.io())
                 .subscribe()
@@ -73,7 +79,9 @@ class MainViewModel @ViewModelInject constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext { accountId ->
-                    currentAccountId.setValueSafely(accountId)
+                    Logger.d("accountId: $accountId")
+
+                    currentAccountId.onNext(accountId)
                     isReady.setValueSafely(true)
                 }
                 .subscribe()

@@ -26,7 +26,7 @@ class AssetsFragment: Fragment(R.layout.fragment_assets) {
             FragmentUtils.addFragmentIfNotExists(
                 childFragmentManager,
                 "assetEditorFragment",
-                AssetEditorDialogFragment.newInstance(true, mainViewModel.currentAccountId.value!!, assetId = assetMeta.assetId), // todo: accountId 셋팅해주
+                AssetEditorDialogFragment.newInstance(true, mainViewModel.currentAccount.value!!.accountId, assetId = assetMeta.assetId), // todo: accountId 셋팅해주
                 true
             )
         }
@@ -52,7 +52,7 @@ class AssetsFragment: Fragment(R.layout.fragment_assets) {
         assetBinding.frAssetAdd.setOnClickListener {
             FragmentUtils.addFragmentIfNotExists(childFragmentManager,
                 "assetEditorFragment",
-                AssetEditorDialogFragment.newInstance(true, mainViewModel.currentAccountId.value!!),
+                AssetEditorDialogFragment.newInstance(true, mainViewModel.currentAccount.value!!.accountId),
                 true
             )
         }

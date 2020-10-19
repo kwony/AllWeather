@@ -21,13 +21,14 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:id="@+id/fr_main_title_bar_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="50dp"
                     android:gravity="center"
                     android:ellipsize="end"
                     android:textColor="#141414"
-                    android:textSize="14sp"
+                    android:textSize="17sp"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
