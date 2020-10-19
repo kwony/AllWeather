@@ -4,10 +4,7 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
-class AssetTypeRepository @Inject constructor() {
-    @Inject lateinit var assetTypeDao: AssetTypeDao
-
+class AssetTypeRepository(private val assetTypeDao: AssetTypeDao) {
     fun getAssetTypeMetaList(accountId: Long): Flowable<List<AssetTypeMeta>> {
         return assetTypeDao.getEntitiesFromAccount(accountId)
     }

@@ -9,6 +9,7 @@ import androidx.lifecycle.SavedStateHandle
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kwony.allweather.arch.setValueSafely
 import kwony.allweather.data.asset.AssetMeta
 import kwony.allweather.data.asset.AssetRepository
 import kwony.allweather.data.asset.AssetTypeMeta
@@ -17,12 +18,10 @@ import javax.inject.Inject
 
 class AssetEditorViewModel @ViewModelInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle,
-    application: Application
+    application: Application,
+    private val assetRepository: AssetRepository,
+    private val assetTypeRepository: AssetTypeRepository
 ): AndroidViewModel(application) {
-    @Inject lateinit var assetRepository: AssetRepository
-
-    @Inject lateinit var assetTypeRepository: AssetTypeRepository
-
     val assetTypes: MutableLiveData<List<AssetTypeMeta>> = MutableLiveData()
 
     val editingAssetMeta: MutableLiveData<AssetMeta> = MutableLiveData()
@@ -39,7 +38,7 @@ class AssetEditorViewModel @ViewModelInject constructor(
         if (!creationMode) {
             compositeDisposable.add(
                 assetRepository.getAssetMeta(assetId)
-                    .doOnNext { editingAssetMeta.value = it }
+                    .doOnNext { editingAssetMeta.setValueSafely(it) }
                     .subscribeOn(Schedulers.io())
                     .subscribe()
             )
@@ -47,7 +46,7 @@ class AssetEditorViewModel @ViewModelInject constructor(
 
         compositeDisposable.add(
             assetTypeRepository.getAssetTypeMetaList(accountId)
-                .doOnNext { assetTypes.value = it }
+                .doOnNext { assetTypes.setValueSafely(it) }
                 .subscribeOn(Schedulers.io())
                 .subscribe()
         )
@@ -71,7 +70,6 @@ class AssetEditorViewModel @ViewModelInject constructor(
                 .subscribeOn(Schedulers.io())
                 .subscribe()
         )
-
     }
 
     override fun onCleared() {

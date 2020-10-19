@@ -10,6 +10,7 @@ import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kwony.allweather.arch.notifyChange
+import kwony.allweather.arch.setValueSafely
 import kwony.allweather.data.account.AccountMeta
 import kwony.allweather.data.account.AccountRepository
 import kwony.allweather.data.asset.AssetTypeMeta
@@ -39,7 +40,7 @@ class AccountEditorViewModel @ViewModelInject constructor(
         if (!creationMode) {
             compositeDisposable.add(
                 accountRepository.getAccountMeta(accountId)
-                    .doOnNext { editingAccountMeta.value = it }
+                    .doOnNext { editingAccountMeta.setValueSafely(it) }
                     .subscribeOn(Schedulers.io())
                     .subscribe()
             )
@@ -47,7 +48,7 @@ class AccountEditorViewModel @ViewModelInject constructor(
 
         compositeDisposable.add(
             assetTypeRepository.getAssetTypeMetaList(accountId)
-                .doOnNext { assetTypes.value = ArrayList<AssetTypeMeta>().apply { addAll(it) } }
+                .doOnNext { assetTypes.setValueSafely(ArrayList<AssetTypeMeta>().apply { addAll(it) }) }
                 .subscribeOn(Schedulers.io())
                 .subscribe()
         )

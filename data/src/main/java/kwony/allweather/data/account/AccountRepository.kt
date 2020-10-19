@@ -6,10 +6,7 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
-class AccountRepository @Inject constructor() {
-    @Inject lateinit var accountDao: AccountDao
-
+class AccountRepository (private val accountDao: AccountDao) {
     fun getAccountMeta(accountId: Long): Flowable<AccountMeta> {
         return accountDao.getEntity(accountId)
     }

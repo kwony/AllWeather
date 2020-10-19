@@ -8,9 +8,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kwony.allweather.AllWeatherApp
+import kwony.allweather.arch.setValueSafely
 import kwony.allweather.arch.toObservable
 import kwony.allweather.data.account.AccountMeta
 import kwony.allweather.data.account.AccountRepository
@@ -22,12 +24,11 @@ import javax.inject.Inject
 
 class MainViewModel @ViewModelInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle,
-    application: Application
+    application: Application,
+    private val accountRepository: AccountRepository,
+    private val assetRepository: AssetRepository,
+    private val assetTypeRepository: AssetTypeRepository
 ): AndroidViewModel(application) {
-
-    @Inject lateinit var accountRepository: AccountRepository
-    @Inject lateinit var assetRepository: AssetRepository
-    @Inject lateinit var assetTypeRepository: AssetTypeRepository
 
     val currentAccountId: MutableLiveData<Long> = MutableLiveData()
     val currentAccount: MutableLiveData<AccountMeta> = MutableLiveData()
@@ -42,7 +43,7 @@ class MainViewModel @ViewModelInject constructor(
             currentAccountId.toObservable().distinctUntilChanged()
                 .flatMap { accountId ->
                     assetRepository.getAssetMetaList(accountId).toObservable()
-                        .doOnNext { currentAssetList.value = it }
+                        .doOnNext { currentAssetList.setValueSafely(it) }
                 }
                 .subscribeOn(Schedulers.io())
                 .subscribe(),
@@ -50,7 +51,7 @@ class MainViewModel @ViewModelInject constructor(
             currentAccountId.toObservable().distinctUntilChanged()
                 .flatMap { accountId ->
                     accountRepository.getAccountMeta(accountId).toObservable()
-                        .doOnNext { currentAccount.value = it }
+                        .doOnNext { currentAccount.setValueSafely(it) }
                 }
                 .subscribeOn(Schedulers.io())
                 .subscribe()
@@ -69,11 +70,12 @@ class MainViewModel @ViewModelInject constructor(
                         }
                     }
                 }
-                .doOnNext { accountId ->
-                    currentAccountId.value = accountId
-                    isReady.value = true
-                }
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext { accountId ->
+                    currentAccountId.setValueSafely(accountId)
+                    isReady.setValueSafely(true)
+                }
                 .subscribe()
         )
     }

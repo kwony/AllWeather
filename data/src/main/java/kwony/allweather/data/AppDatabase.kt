@@ -9,7 +9,7 @@ import kwony.allweather.data.asset.AssetMeta
 import kwony.allweather.data.asset.AssetTypeDao
 import kwony.allweather.data.asset.AssetTypeMeta
 
-@Database(entities = [AssetMeta::class, AssetTypeMeta::class, AccountMeta::class], version = 1)
+@Database(entities = [AssetMeta::class, AssetTypeMeta::class, AccountMeta::class], version = 1, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun assetDao(): AssetDao
 

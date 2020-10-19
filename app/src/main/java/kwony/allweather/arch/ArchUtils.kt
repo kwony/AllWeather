@@ -1,5 +1,6 @@
 package kwony.allweather.arch
 
+import android.os.Looper
 import androidx.lifecycle.*
 import io.reactivex.Observable
 
@@ -20,5 +21,13 @@ fun <T> LiveData<T>.toObservable(): Observable<T> {
 }
 
 fun <T> MutableLiveData<T>.notifyChange() {
-    this.value = this.value
+    this.setValueSafely(this.value)
+}
+
+fun <T> MutableLiveData<T>.setValueSafely(value: T?) {
+    if (Looper.myLooper() == Looper.getMainLooper()) {
+        setValue(value)
+    } else {
+        postValue(value)
+    }
 }
