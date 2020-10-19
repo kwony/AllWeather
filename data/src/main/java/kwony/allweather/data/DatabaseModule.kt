@@ -7,6 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kwony.allweather.data.account.AccountRepository
+import kwony.allweather.data.asset.AssetRepository
 import javax.inject.Singleton
 
 @Module
@@ -18,5 +20,13 @@ class DatabaseModule {
         return Room.databaseBuilder(context, AppDatabase::class.java, "database")
             .build()
     }
+
+//    @Singleton
+//    @Provides
+//    fun providesAccountRepository(appDatabase: AppDatabase) = AccountRepository(appDatabase.accountDao())
+//
+//    @Singleton
+//    @Provides
+//    fun provideAssetRepository(appDatabase: AppDatabase) = AssetRepository(appDatabase.assetDao())
 
 }

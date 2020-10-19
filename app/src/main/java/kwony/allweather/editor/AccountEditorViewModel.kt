@@ -58,7 +58,8 @@ class AccountEditorViewModel @ViewModelInject constructor(
             Single.fromCallable {
                 val accountMeta = AccountMeta(
                     accountId = if (creationMode) 0L else editingAccountMeta.value!!.accountId,
-                    accountName = name
+                    accountName = name,
+                    isDefault = false
                 )
                 accountRepository.upsert(accountMeta)
             }

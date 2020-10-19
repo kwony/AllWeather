@@ -1,5 +1,7 @@
 package kwony.allweather.data.account
 
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import io.reactivex.Flowable
 import javax.inject.Inject
 import javax.inject.Singleton

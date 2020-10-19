@@ -2,16 +2,28 @@ package kwony.allweather
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import kwony.allweather.maintab.MainFragment
+import kwony.allweather.maintab.MainViewModel
 import kwony.allweather.utils.FragmentUtils
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    private val mainViewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FragmentUtils.replaceFragment(supportFragmentManager, android.R.id.content, "mainFragment",
-            MainFragment()
-        )
+
+        mainViewModel.isReady.observe(this, Observer {
+            if (it) {
+                FragmentUtils.replaceFragment(supportFragmentManager, android.R.id.content, "mainFragment",
+                    MainFragment()
+                )
+            }
+        })
+
+        mainViewModel.ready()
     }
 }

@@ -11,6 +11,9 @@ interface AssetTypeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun upsert(assetType: AssetTypeMeta): Long
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun upsert(assetType: List<AssetTypeMeta>): List<Long>
+
     @Query("select * from assettypemeta where assetTypeId = :assetTypeId")
     fun getEntity(assetTypeId: Long): Flowable<AssetTypeMeta>
 
