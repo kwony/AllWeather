@@ -60,14 +60,15 @@ class AssetEditorDialogFragment: DialogFragment() {
             dismissAllowingStateLoss()
         }
 
-        fr_asset_editor_titlebar.rightIvClick.setOnClickListener {
-            if (fr_asset_editor_amount_desc.text.isBlank() || fr_asset_editor_name_desc.text.isBlank()) {
+        fr_asset_editor_titlebar.rightText.setOnClickListener {
+            if (fr_asset_editor_amount_desc.text.isBlank() || fr_asset_editor_name_desc.text.isBlank()
+                || assetEditorViewModel.assetTypes.value!!.getOrNull(getCheckedButtonIndex()) == null) {
                 // error toast
                 return@setOnClickListener;
             }
 
             assetEditorViewModel.done(
-                name = fr_asset_editor_name_desc.text.toString(),
+                name = fr_asset_editor_name_edit.text.toString(),
                 amount = fr_asset_editor_amount_edit.text.toString().toInt(),
                 typeId = assetEditorViewModel.assetTypes.value!![getCheckedButtonIndex()].assetTypeId
             )
@@ -75,17 +76,23 @@ class AssetEditorDialogFragment: DialogFragment() {
     }
 
     private fun observe() {
-        assetEditorViewModel.assetTypes.observe(viewLifecycleOwner, Observer {
-            it.forEach {
+        assetEditorViewModel.assetTypes.observe(viewLifecycleOwner, Observer { list ->
+            list.forEach {
                 val radioButton = RadioButton(requireContext())
                 radioButton.text = it.assetTypeName
                 fr_asset_editor_type_group.addView(radioButton)
             }
+
+            (fr_asset_editor_type_group.children.filter { it is RadioButton }.first() as RadioButton).isChecked = true
         })
 
         assetEditorViewModel.editingAssetMeta.observe(viewLifecycleOwner, Observer {
             fr_asset_editor_name_edit.setText(it.assetName)
-            fr_asset_editor_amount_edit.setText(it.assetAmount)
+            fr_asset_editor_amount_edit.setText(it.assetAmount.toString())
+        })
+
+        assetEditorViewModel.done.observe(viewLifecycleOwner, Observer {
+            dismissAllowingStateLoss()
         })
     }
 

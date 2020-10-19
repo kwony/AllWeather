@@ -26,6 +26,8 @@ class AssetEditorViewModel @ViewModelInject constructor(
 
     val editingAssetMeta: MutableLiveData<AssetMeta> = MutableLiveData()
 
+    val done: MutableLiveData<Boolean> = MutableLiveData()
+
     private val compositeDisposable = CompositeDisposable()
 
     private var accountId: Long = -1L
@@ -56,7 +58,7 @@ class AssetEditorViewModel @ViewModelInject constructor(
         require(accountId >= 0)
 
         val assetMeta = AssetMeta(
-            assetId = if (creationMode) -1L else editingAssetMeta.value!!.assetId,
+            assetId = if (creationMode) 0L else editingAssetMeta.value!!.assetId,
             accountId = accountId,
             assetName = name,
             assetAmount = amount,
@@ -67,6 +69,7 @@ class AssetEditorViewModel @ViewModelInject constructor(
             Single.fromCallable {
                 assetRepository.upsert(assetMeta)
             }
+                .doOnSuccess { done.setValueSafely(true) }
                 .subscribeOn(Schedulers.io())
                 .subscribe()
         )

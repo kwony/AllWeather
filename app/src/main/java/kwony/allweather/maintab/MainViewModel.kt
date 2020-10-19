@@ -44,8 +44,12 @@ class MainViewModel @ViewModelInject constructor(
         compositeDisposable.addAll(
             currentAccountId
                 .flatMap { accountId ->
+                    Logger.d("accountId: $accountId")
                     assetRepository.getAssetMetaList(accountId).toObservable()
-                        .doOnNext { currentAssetList.setValueSafely(it) }
+                        .doOnNext {
+                            Logger.d("list: $it")
+                            currentAssetList.setValueSafely(it)
+                        }
                 }
                 .subscribeOn(Schedulers.io())
                 .subscribe(),

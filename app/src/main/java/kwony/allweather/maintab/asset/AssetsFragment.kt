@@ -5,6 +5,8 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kwony.allweather.R
 import kwony.allweather.data.asset.AssetMeta
@@ -26,7 +28,7 @@ class AssetsFragment: Fragment(R.layout.fragment_assets) {
             FragmentUtils.addFragmentIfNotExists(
                 childFragmentManager,
                 "assetEditorFragment",
-                AssetEditorDialogFragment.newInstance(true, mainViewModel.currentAccount.value!!.accountId, assetId = assetMeta.assetId), // todo: accountId 셋팅해주
+                AssetEditorDialogFragment.newInstance(false, mainViewModel.currentAccount.value!!.accountId, assetId = assetMeta.assetId), // todo: accountId 셋팅해주
                 true
             )
         }
@@ -48,6 +50,7 @@ class AssetsFragment: Fragment(R.layout.fragment_assets) {
         assetBinding = FragmentAssetsBinding.bind(view)
 
         assetBinding.frAssetRv.adapter = adapter
+        assetBinding.frAssetRv.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
         assetBinding.frAssetAdd.setOnClickListener {
             FragmentUtils.addFragmentIfNotExists(childFragmentManager,
