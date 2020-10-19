@@ -5,9 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.RxView
-import kotlinx.android.synthetic.main.viewholder_asset_default.view.*
 import kwony.allweather.R
-import kwony.allweather.data.asset.AssetMeta
 import kwony.allweather.databinding.ViewholderAssetDefaultBinding
 import java.text.NumberFormat
 import java.util.*
@@ -24,17 +22,17 @@ class AssetDefaultViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) 
         }
     }
 
-    fun bind(assetMeta: AssetMeta, listener: AssetAdapterClickListener?) {
+    fun bind(item: AssetAdapterItem, listener: AssetAdapterClickListener?) {
         binding = ViewholderAssetDefaultBinding.bind(itemView)
-        binding.vhAssetName.text = assetMeta.assetName
-        binding.vhAssetAmount.text = NumberFormat.getInstance(Locale.getDefault()).format(assetMeta.assetAmount)
+        binding.vhAssetName.text = item.assetName
+        binding.vhAssetAmount.text = NumberFormat.getInstance(Locale.getDefault()).format(item.assetAmount)
 
         RxView.clicks(binding.vhAssetEdit)
-            .doOnNext { listener?.editClick(assetMeta) }
+            .doOnNext { listener?.editClick(item.assetMeta) }
             .subscribe()
 
         RxView.clicks(binding.vhAssetDelete)
-            .doOnNext { listener?.deleteClick(assetMeta) }
+            .doOnNext { listener?.deleteClick(item.assetMeta) }
             .subscribe()
     }
 }

@@ -41,17 +41,14 @@ class AssetEditorViewModel @ViewModelInject constructor(
             compositeDisposable.add(
                 assetRepository.getAssetMeta(assetId)
                     .doOnNext { editingAssetMeta.setValueSafely(it) }
+                    .flatMap {
+                        assetTypeRepository.getAssetTypeMetaList(accountId)
+                            .doOnNext { assetTypes.setValueSafely(it) }
+                    }
                     .subscribeOn(Schedulers.io())
                     .subscribe()
             )
         }
-
-        compositeDisposable.add(
-            assetTypeRepository.getAssetTypeMetaList(accountId)
-                .doOnNext { assetTypes.setValueSafely(it) }
-                .subscribeOn(Schedulers.io())
-                .subscribe()
-        )
     }
 
     fun done(name: String, typeId: Long, amount: Int) {

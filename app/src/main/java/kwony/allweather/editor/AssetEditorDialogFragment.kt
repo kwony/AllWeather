@@ -77,13 +77,15 @@ class AssetEditorDialogFragment: DialogFragment() {
 
     private fun observe() {
         assetEditorViewModel.assetTypes.observe(viewLifecycleOwner, Observer { list ->
+            val currentAssetTypeId = assetEditorViewModel.editingAssetMeta.value!!.assetTypeId
+
             list.forEach {
                 val radioButton = RadioButton(requireContext())
                 radioButton.text = it.assetTypeName
+                radioButton.isChecked = it.assetTypeId == currentAssetTypeId
+
                 fr_asset_editor_type_group.addView(radioButton)
             }
-
-            (fr_asset_editor_type_group.children.filter { it is RadioButton }.first() as RadioButton).isChecked = true
         })
 
         assetEditorViewModel.editingAssetMeta.observe(viewLifecycleOwner, Observer {
