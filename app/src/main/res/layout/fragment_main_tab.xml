@@ -9,6 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fr_maintab_bottom_divider"/>
+
+    <View
+        android:id="@+id/fr_maintab_bottom_divider"
+        android:layout_width="match_parent"
+        android:background="#d8d8d8"
+        android:layout_height="0.5dp"
         app:layout_constraintBottom_toTopOf="@id/fr_maintab_bottom"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat

@@ -84,4 +84,6 @@ dependencies {
     implementation "androidx.room:room-rxjava2:2.2.5"
     implementation "android.arch.persistence.room:runtime:1.1.1"
     kapt "android.arch.persistence.room:compiler:1.1.1"
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

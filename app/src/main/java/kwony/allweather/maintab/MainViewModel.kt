@@ -1,7 +1,6 @@
 package kwony.allweather.maintab
 
 import android.app.Application
-import android.content.Context
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
@@ -16,18 +15,15 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import kwony.allweather.AllWeatherApp
 import kwony.allweather.arch.setValueSafely
-import kwony.allweather.arch.toObservable
 import kwony.allweather.data.account.AccountMeta
 import kwony.allweather.data.account.AccountRepository
 import kwony.allweather.data.asset.AssetMeta
 import kwony.allweather.data.asset.AssetRepository
 import kwony.allweather.data.asset.AssetTypeMeta
 import kwony.allweather.data.asset.AssetTypeRepository
-import kwony.allweather.maintab.asset.AssetAdapter
 import kwony.allweather.maintab.asset.AssetAdapterItem
 import kwony.allweather.model.AssetTypeDefaults
 import kwony.allweather.utils.Logger
-import javax.inject.Inject
 
 class MainViewModel @ViewModelInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle,
@@ -40,6 +36,7 @@ class MainViewModel @ViewModelInject constructor(
     private val currentAccountId: BehaviorSubject<Long> = BehaviorSubject.create()
     val currentAccount: MutableLiveData<AccountMeta> = MutableLiveData()
     val currentAssetList: MutableLiveData<List<AssetAdapterItem>> = MutableLiveData()
+    val currentAssetTypeItems : MutableLiveData<List<AssetTypeItem>> = MutableLiveData()
 
     val isReady: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -73,10 +70,27 @@ class MainViewModel @ViewModelInject constructor(
                             }
                             currentAssetList.setValueSafely(items)
                         }
+                        .doOnNext { pair ->
+                            val assets = pair.first
+                            val assetTypes = pair.second
+                            val totalAmount = pair.first.sumBy { it.assetAmount }
+                            val assetTypeItems = assetTypes.map {  currentAssetType ->
+                                val corresAssets = assets.filter { it.assetTypeId == currentAssetType.assetTypeId }
+
+                                val assetTypeSum = corresAssets.sumBy { it.assetAmount }
+                                val assetTypePercentage = assetTypeSum.toFloat() / totalAmount
+
+                                AssetTypeItem(
+                                    assetTypeMeta = currentAssetType,
+                                    assetTypeSum = assetTypeSum,
+                                    assetTypePercentage = assetTypePercentage
+                                )
+                            }
+
+                            currentAssetTypeItems.setValueSafely(assetTypeItems)
+                        }
                 }
                 .subscribe()
-
-
         )
     }
 
@@ -125,3 +139,9 @@ class MainViewModel @ViewModelInject constructor(
         .subscribeOn(Schedulers.io())
 
 }
+
+data class AssetTypeItem(
+    val assetTypeMeta: AssetTypeMeta,
+    val assetTypeSum: Int,
+    val assetTypePercentage: Float
+)
