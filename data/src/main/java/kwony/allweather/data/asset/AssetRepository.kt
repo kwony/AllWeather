@@ -9,6 +9,10 @@ class AssetRepository(private val assetDao: AssetDao) {
         return assetDao.getEntity(assetId)
     }
 
+    fun getAssetAllMetaList(): Flowable<List<AssetMeta>> {
+        return assetDao.getEntities()
+    }
+
     fun getAssetMetaList(accountId: Long): Flowable<List<AssetMeta>> {
         return assetDao.getEntitiesFromAccount(accountId)
     }

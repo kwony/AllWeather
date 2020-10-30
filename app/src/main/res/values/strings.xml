@@ -33,6 +33,14 @@
 
     <string name="account_asset_type_add"><![CDATA[자산 종류를 추가해보세요]]></string>
 
+    <string name="account_add"><![CDATA[계좌를 추가해보세요]]></string>
+    <string name="account_selected"><![CDATA[(선택됨)]]></string>
+    <string name="account_score_80_100"><![CDATA[자산 배분을 아주 잘하고 계시군요!]]></string>
+    <string name="account_score_60_80"><![CDATA[자산 배분을 잘하고 계시군요!]]></string>
+    <string name="account_score_40_60"><![CDATA[자산 배분 조정이 필요해 보입니다]]></string>
+    <string name="account_score_20_40"><![CDATA[자산 배분 조정이 매우 필요해보입니다]]></string>
+    <string name="account_score_0_20"><![CDATA[포트폴리오 재점검이 필요합니다]]></string>
+
     <string name="type_stock"><![CDATA[주식]]></string>
     <string name="type_short_bond"><![CDATA[단기채권]]></string>
     <string name="type_long_bond"><![CDATA[장기채권]]></string>

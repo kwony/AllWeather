@@ -5,6 +5,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 class AssetTypeRepository(private val assetTypeDao: AssetTypeDao) {
+    fun getAllAssetTypeList(): Flowable<List<AssetTypeMeta>> {
+        return assetTypeDao.getEntities()
+    }
+
     fun getAssetTypeMetaList(accountId: Long): Flowable<List<AssetTypeMeta>> {
         return assetTypeDao.getEntitiesFromAccount(accountId)
     }

@@ -10,6 +10,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kwony.allweather.data.account.AccountRepository
 import kwony.allweather.data.asset.AssetRepository
 import kwony.allweather.data.asset.AssetTypeRepository
+import kwony.allweather.data.pref.AppPreference
 import javax.inject.Singleton
 
 @Module
@@ -34,4 +35,10 @@ class DatabaseModule {
     @Singleton
     @Provides
     fun provideAssetTypeRepository(appDatabase: AppDatabase) = AssetTypeRepository(appDatabase.assetTypeDao())
+
+    @Singleton
+    @Provides
+    fun provideAppPreference(@ApplicationContext context: Context): AppPreference {
+        return AppPreference(context)
+    }
 }

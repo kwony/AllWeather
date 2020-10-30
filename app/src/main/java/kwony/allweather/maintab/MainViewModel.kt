@@ -11,6 +11,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
+import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import kwony.allweather.AllWeatherApp
@@ -21,22 +22,26 @@ import kwony.allweather.data.asset.AssetMeta
 import kwony.allweather.data.asset.AssetRepository
 import kwony.allweather.data.asset.AssetTypeMeta
 import kwony.allweather.data.asset.AssetTypeRepository
+import kwony.allweather.data.pref.AppPreference
 import kwony.allweather.maintab.asset.AssetAdapterItem
 import kwony.allweather.model.AssetTypeDefaults
 import kwony.allweather.utils.Logger
+import kotlin.math.pow
 
 class MainViewModel @ViewModelInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle,
     application: Application,
     private val accountRepository: AccountRepository,
     private val assetRepository: AssetRepository,
-    private val assetTypeRepository: AssetTypeRepository
+    private val assetTypeRepository: AssetTypeRepository,
+    private val appPreference: AppPreference
 ): AndroidViewModel(application) {
 
-    private val currentAccountId: BehaviorSubject<Long> = BehaviorSubject.create()
-    val currentAccount: MutableLiveData<AccountMeta> = MutableLiveData()
+    val currentAccountLiveData: MutableLiveData<AccountDetailItem> = MutableLiveData()
     val currentAssetList: MutableLiveData<List<AssetAdapterItem>> = MutableLiveData()
     val currentAssetTypeItems : MutableLiveData<List<AssetTypeItem>> = MutableLiveData()
+
+    val accountListLiveData: MutableLiveData<List<AccountListItem>> = MutableLiveData()
 
     val isReady: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -44,52 +49,83 @@ class MainViewModel @ViewModelInject constructor(
 
     init {
         compositeDisposable.addAll(
-            currentAccountId
-                .flatMap { accountId ->
-                    Logger.d("accountId: $accountId")
-                    accountRepository.getAccountMeta(accountId).toObservable()
-                        .doOnNext {
-                            Logger.d("accountMeta: $it")
-                            currentAccount.setValueSafely(it)
+            appPreference.selectedAccountIdObservable()
+                .filter { it != 0L }
+                .flatMap {  selectedAccountId ->
+                    Observable.combineLatest(
+                        accountRepository.getAccountMetaList().toObservable(),
+                        assetRepository.getAssetMetaList(accountId = selectedAccountId).toObservable(),
+                        assetTypeRepository.getAssetTypeMetaList(accountId = selectedAccountId).toObservable(),
+                        Function3<List<AccountMeta>, List<AssetMeta>, List<AssetTypeMeta>, Triple<List<AccountMeta>, List<AssetMeta>, List<AssetTypeMeta>>> {
+                            a, b, c -> Triple(a, b, c)
+
+                        }
+                    )
+                        .doOnNext { triple ->
+                            val items = triple.second.map {  assetMeta ->
+                                val assetTypeMeta = triple.third.find { assetMeta.assetTypeId == it.assetTypeId }
+                                AssetAdapterItem(assetMeta, assetTypeMeta)
+                            }
+                            currentAssetList.setValueSafely(items)
+                        }
+                        .doOnNext { triple ->
+                            val accounts = triple.first
+                            val assets = triple.second
+                            val assetTypes = triple.third
+
+                            val totalAmount = triple.second.sumBy { it.assetAmount }
+                            val assetTypeItems = assetTypes.map {  currentAssetType ->
+                                val corresAssets = assets.filter { it.assetTypeId == currentAssetType.assetTypeId }
+                                val assetTypeSum = corresAssets.sumBy { it.assetAmount }
+                                val assetTypePercentage = assetTypeSum.toFloat() / totalAmount
+
+                                AssetTypeItem(assetTypeMeta = currentAssetType, assetTypeSum = assetTypeSum, assetTypePercentage = assetTypePercentage)
+                            }
+
+                            currentAssetTypeItems.setValueSafely(assetTypeItems)
+
+                            val varianceSum = assetTypeItems.sumByDouble {
+                                (it.assetTypePercentage - it.assetTypeMeta.targetWeight.toFloat() / 100).pow(2).toDouble()
+                            }
+
+                            val currentAccountDetailItem = accounts.filter { it.accountId == selectedAccountId }.map { currentAccount ->
+                                val sum = assets.filter { it.accountId == currentAccount.accountId }.sumBy { it.assetAmount }
+                                val score = (1 - varianceSum.toFloat()) * 100
+                                AccountDetailItem(currentAccount, sum, score.toInt())
+                            }.first()
+
+                            currentAccountLiveData.setValueSafely(currentAccountDetailItem)
+
+                            val accountListItem = accounts.map {
+                                val isSelected = it.accountId == selectedAccountId
+                                AccountListItem(it, isSelected)
+                            }
+
+                            accountListLiveData.setValueSafely(accountListItem)
                         }
                 }
                 .subscribeOn(Schedulers.io())
                 .subscribe(),
 
-            currentAccountId
-                .flatMap {  accountId ->
-                    Observable.combineLatest(
-                        assetRepository.getAssetMetaList(accountId = accountId).toObservable(),
-                        assetTypeRepository.getAssetTypeMetaList(accountId = accountId).toObservable(),
-                        BiFunction<List<AssetMeta>, List<AssetTypeMeta>, Pair<List<AssetMeta>, List<AssetTypeMeta>>> {a, b -> Pair(a, b)}
-                    )
-                        .doOnNext { pair ->
-                            val items = pair.first.map {  assetMeta ->
-                                val assetTypeMeta = pair.second.find { assetMeta.assetTypeId == it.assetTypeId }
-                                AssetAdapterItem(assetMeta, assetTypeMeta)
-                            }
-                            currentAssetList.setValueSafely(items)
-                        }
-                        .doOnNext { pair ->
-                            val assets = pair.first
-                            val assetTypes = pair.second
-                            val totalAmount = pair.first.sumBy { it.assetAmount }
-                            val assetTypeItems = assetTypes.map {  currentAssetType ->
-                                val corresAssets = assets.filter { it.assetTypeId == currentAssetType.assetTypeId }
-
-                                val assetTypeSum = corresAssets.sumBy { it.assetAmount }
-                                val assetTypePercentage = assetTypeSum.toFloat() / totalAmount
-
-                                AssetTypeItem(
-                                    assetTypeMeta = currentAssetType,
-                                    assetTypeSum = assetTypeSum,
-                                    assetTypePercentage = assetTypePercentage
-                                )
-                            }
-
-                            currentAssetTypeItems.setValueSafely(assetTypeItems)
-                        }
+            Flowable.combineLatest(
+                accountRepository.getAccountMetaList(),
+                assetRepository.getAssetAllMetaList(),
+                BiFunction<List<AccountMeta>, List<AssetMeta>, Pair<List<AccountMeta>, List<AssetMeta>>> {
+                    a, b -> Pair(a, b)
                 }
+            )
+                .doOnNext { pair ->
+                    val accountList = pair.first
+                    val assetList = pair.second
+
+                    accountList.map { currentAccount ->
+                        val sum = assetList.filter { it.accountId == currentAccount.accountId }.sumBy { it.assetAmount }
+                        val isSelected = appPreference.selectedAccountIdAsValue() == currentAccount.accountId
+
+
+                    }
+                }
+                .subscribeOn(Schedulers.io())
                 .subscribe()
         )
     }
@@ -97,12 +133,12 @@ class MainViewModel @ViewModelInject constructor(
     fun ready() {
         compositeDisposable.add(
             accountRepository.getAccountMetaList()
-                .flatMap {
-                    if (it.isEmpty()) {
+                .flatMap { list ->
+                    if (list.isEmpty()) {
                         createDefaultAccount()
                     } else {
                         Flowable.fromCallable {
-                            it.first().accountId
+                            list.find { appPreference.selectedAccountIdAsValue() == it.accountId }?.accountId ?: list.first().accountId
                         }
                     }
                 }
@@ -111,7 +147,9 @@ class MainViewModel @ViewModelInject constructor(
                 .doOnNext { accountId ->
                     Logger.d("accountId: $accountId")
 
-                    currentAccountId.onNext(accountId)
+                    if (accountId != appPreference.selectedAccountIdAsValue()){
+                        appPreference.updateSelectedAccountId(accountId)
+                    }
                     isReady.setValueSafely(true)
                 }
                 .subscribe()
@@ -139,6 +177,20 @@ class MainViewModel @ViewModelInject constructor(
         .subscribeOn(Schedulers.io())
 
 }
+
+data class AccountDetailItem(
+    val accountMeta: AccountMeta,
+    val accountSum: Int,
+    val score: Int
+) {
+    val accountId get() = accountMeta.accountId
+    val accountName get() = accountMeta.accountName
+}
+
+data class AccountListItem (
+    val accountMeta: AccountMeta,
+    val selected: Boolean
+)
 
 data class AssetTypeItem(
     val assetTypeMeta: AssetTypeMeta,
