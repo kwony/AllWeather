@@ -19,16 +19,14 @@ import javax.inject.Inject
 
 class AccountEditorViewModel @ViewModelInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle,
+    private val accountRepository: AccountRepository,
+    private val assetTypeRepository: AssetTypeRepository,
     application: Application
 ): AndroidViewModel(application) {
 
-    @Inject lateinit var accountRepository: AccountRepository
-
-    @Inject lateinit var assetTypeRepository: AssetTypeRepository
-
     val editingAccountMeta: MutableLiveData<AccountMeta> = MutableLiveData()
 
-    val assetTypes: MutableLiveData<ArrayList<AssetTypeMeta>> = MutableLiveData()
+    val assetTypes: MutableLiveData<ArrayList<AssetTypeMeta>> = MutableLiveData(ArrayList())
 
     private var creationMode: Boolean = false
 
@@ -64,9 +62,15 @@ class AccountEditorViewModel @ViewModelInject constructor(
                 )
                 accountRepository.upsert(accountMeta)
             }
-                .doOnSuccess {
-                    // todo: 자산 배분 정도 이제 업데이트 해주기
-
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .doOnSuccess { accountId ->
+                    assetTypes.value?.forEach {
+                        it.accountId = accountId
+                    }
+                    assetTypes.value?.run {
+                        assetTypeRepository.upsert(this)
+                    }
                 }
                 .subscribe()
         )

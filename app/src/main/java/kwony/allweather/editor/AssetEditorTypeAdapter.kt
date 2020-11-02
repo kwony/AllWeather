@@ -42,7 +42,7 @@ data class AssetTypeAdapterItem(
     override val viewType: AssetTypeViewType get() = AssetTypeViewType.NORMAL
 }
 
-data class AssetTypeAdapterEmptyItem(
+data class AssetTypeAdapterAddItem(
     val empty: Boolean = true
 ): TypeAdapterItem<AssetTypeViewType> {
     override val itemId: Long get() = this.hashCode().toLong()

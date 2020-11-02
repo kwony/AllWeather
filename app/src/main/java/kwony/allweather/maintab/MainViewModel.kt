@@ -156,6 +156,10 @@ class MainViewModel @ViewModelInject constructor(
         )
     }
 
+    fun changeSelectedAccountId(accountId: Long) {
+        appPreference.updateSelectedAccountId(accountId)
+    }
+
     private fun createDefaultAccount() = Flowable.fromCallable {
         val accountMeta = AccountMeta(
             accountId = 0L,

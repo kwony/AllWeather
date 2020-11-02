@@ -13,7 +13,8 @@
         app:drawable_right="@drawable/ic_close"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_marginHorizontal="15dp"
+        android:layout_marginHorizontal="10dp"
+        android:paddingHorizontal="10dp"
         android:layout_marginTop="6dp"
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -84,11 +85,11 @@
 
         <TextView
             android:id="@+id/fr_asset_type_editor_done"
-            android:layout_marginTop="20dp"
+            android:layout_marginVertical="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#fff"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:layout_gravity="center"
             android:gravity="center"

@@ -32,7 +32,7 @@ class AssetTypeViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         binding.vhAssettypeName.text = item.assetTypeMeta.assetTypeName
         binding.vhAssettypeName.visibility = View.VISIBLE
 
-        binding.vhAssettypeWeight.text = String.format("%s%", item.assetTypeMeta.targetWeight.toString())
+        binding.vhAssettypeWeight.text = String.format("%s", item.assetTypeMeta.targetWeight.toString()) + "%"
         binding.vhAssettypeWeight.visibility = View.VISIBLE
     }
 }

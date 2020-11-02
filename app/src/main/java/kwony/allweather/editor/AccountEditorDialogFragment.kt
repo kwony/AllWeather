@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_account_editor.*
 import kwony.allweather.R
@@ -21,7 +23,7 @@ class AccountEditorDialogFragment: DialogFragment() {
         private const val KEY_ACCOUNT_ID = "key_account_id"
 
         @JvmStatic
-        fun newInstance(creationMode: Boolean, accountId: Long): AccountEditorDialogFragment {
+        fun newInstance(creationMode: Boolean, accountId: Long = 0L): AccountEditorDialogFragment {
             val bundle = Bundle().apply {
                 putBoolean(KEY_CREATION_MODE, creationMode)
                 putLong(KEY_ACCOUNT_ID, accountId)
@@ -39,38 +41,27 @@ class AccountEditorDialogFragment: DialogFragment() {
 
     private val listener = object: AccountAssetTypeAdapterListener {
         override fun add() {
-            AssetTypeEditorDialogFragment.newInstance(true).apply {
+            val dialog = AssetTypeEditorDialogFragment.newInstance(true).apply {
                 doneCallback = { assetTypeMeta ->
                     assetTypeMeta?.run {
                         accountEditorViewModel.addAssetType(this)
                     }
                 }
-            }.run {
-                FragmentUtils.addFragmentIfNotExists(
-                    childFragmentManager,
-                    "assetTypeEditorFragment",
-                    this,
-                    true
-                )
             }
+
+            dialog.show(childFragmentManager, null)
         }
 
         override fun edit(assetTypeMeta: AssetTypeMeta) {
-            AssetTypeEditorDialogFragment.newInstance(false, assetTypeMeta).apply {
+            val dialog = AssetTypeEditorDialogFragment.newInstance(false, assetTypeMeta).apply {
                 doneCallback = { assetTypeMeta ->
                     assetTypeMeta?.run {
                         accountEditorViewModel.editAssetType(this)
                     }
                 }
-
-            }.run {
-                FragmentUtils.addFragmentIfNotExists(
-                    childFragmentManager,
-                    "assetTypeEditorFragment",
-                    this,
-                    true
-                )
             }
+
+            dialog.show(childFragmentManager, null)
         }
 
         override fun delete(assetTypeMeta: AssetTypeMeta) {
@@ -98,6 +89,9 @@ class AccountEditorDialogFragment: DialogFragment() {
 
         adapter = AssetEditorTypeAdapter(listener)
 
+        fr_account_editor_type_rv.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        fr_account_editor_type_rv.adapter = adapter
+
         fr_account_editor_titlebar.leftIvClick.setOnClickListener {
             dismissAllowingStateLoss()
         }
@@ -118,7 +112,7 @@ class AccountEditorDialogFragment: DialogFragment() {
             val items = if (assetTypes.size < 10) {
                 ArrayList<TypeAdapterItem<AssetTypeViewType>>().apply {
                     addAll(assetTypes.map { AssetTypeAdapterItem(it) })
-                    add(AssetTypeAdapterEmptyItem())
+                    add(AssetTypeAdapterAddItem())
                 }.toList()
             } else {
                 assetTypes.map { AssetTypeAdapterItem(it) }

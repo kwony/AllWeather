@@ -14,6 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kwony.allweather.R
 import kwony.allweather.common.TypeAdapterItem
 import kwony.allweather.databinding.FragmentMainBinding
+import kwony.allweather.editor.AccountEditorDialogFragment
 import kwony.allweather.maintab.drawer.*
 import kwony.allweather.utils.FragmentUtils
 import java.util.concurrent.TimeUnit
@@ -27,12 +28,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private val listener = object: MainAccountAdapterListener {
         override fun clickAccountAdd() {
-            super.clickAccountAdd()
+            AccountEditorDialogFragment.newInstance(true).show(childFragmentManager, null)
         }
 
         override fun clickAccount(item: AccountListItem) {
-            // todo change account id
-
+            mainViewModel.changeSelectedAccountId(item.accountMeta.accountId)
         }
     }
 
