@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kwony.allweather.common.SimpleAdapter
 import kwony.allweather.data.asset.AssetMeta
 import kwony.allweather.data.asset.AssetTypeMeta
+import kwony.allweather.utils.DimensionUtils
 
 class AssetAdapter(private val listener: AssetAdapterClickListener?) : SimpleAdapter<AssetAdapterItem, RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -13,6 +14,12 @@ class AssetAdapter(private val listener: AssetAdapterClickListener?) : SimpleAda
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as AssetDefaultViewHolder).bind(items[position], listener)
+
+        if (position == itemCount - 1) {
+            (holder.itemView.layoutParams as ViewGroup.MarginLayoutParams).apply {
+                bottomMargin = DimensionUtils.dp2px(holder.itemView.context, 6f).toInt()
+            }
+        }
     }
 }
 
