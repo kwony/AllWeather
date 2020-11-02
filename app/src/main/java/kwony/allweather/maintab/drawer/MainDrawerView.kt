@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.layout_main_drawer_view.view.*
 import kwony.allweather.R
 import kwony.allweather.maintab.AccountDetailItem
+import kwony.allweather.utils.NumberUtils
 import java.text.NumberFormat
 import java.util.*
 
@@ -26,10 +27,9 @@ class MainDrawerView @JvmOverloads constructor(
 
     val accountRv: RecyclerView get() = layout_drawer_account_list
 
-    // todo: account sum meta
     fun setSelectedAccount(accountDetailItem: AccountDetailItem) {
         layout_drawer_selected_account_name.text = accountDetailItem.accountMeta.accountName
-        layout_drawer_selected_account_amount.text = NumberFormat.getInstance(Locale.getDefault()).format(accountDetailItem.accountSum)
+        layout_drawer_selected_account_amount.text = NumberUtils.wonString(context, accountDetailItem.accountSum)
 
         layout_drawer_selected_account_score_desc.text = when (accountDetailItem.score) {
             in 80..100 -> {
