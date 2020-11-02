@@ -19,6 +19,10 @@ class AssetAdapter(private val listener: AssetAdapterClickListener?) : SimpleAda
             (holder.itemView.layoutParams as ViewGroup.MarginLayoutParams).apply {
                 bottomMargin = DimensionUtils.dp2px(holder.itemView.context, 6f).toInt()
             }
+        } else {
+            (holder.itemView.layoutParams as ViewGroup.MarginLayoutParams).apply {
+                bottomMargin = DimensionUtils.dp2px(holder.itemView.context, 0f).toInt()
+            }
         }
     }
 }
