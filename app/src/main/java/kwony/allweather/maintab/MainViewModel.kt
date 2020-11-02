@@ -78,8 +78,16 @@ class MainViewModel @ViewModelInject constructor(
                                 val corresAssets = assets.filter { it.assetTypeId == currentAssetType.assetTypeId }
                                 val assetTypeSum = corresAssets.sumBy { it.assetAmount }
                                 val assetTypePercentage = assetTypeSum.toFloat() / totalAmount
+                                val targetSum = (totalAmount * (currentAssetType.targetWeight.toFloat() / 100f)).toInt()
+                                val targetWeight = currentAssetType.targetWeight.toFloat() / 100
 
-                                AssetTypeItem(assetTypeMeta = currentAssetType, assetTypeSum = assetTypeSum, assetTypePercentage = assetTypePercentage)
+                                AssetTypeItem(
+                                    assetTypeMeta = currentAssetType,
+                                    assetTypeSum = assetTypeSum,
+                                    assetTypePercentage = assetTypePercentage,
+                                    targetSum = targetSum,
+                                    targetWeight = targetWeight
+                                )
                             }
 
                             currentAssetTypeItems.setValueSafely(assetTypeItems)
@@ -199,5 +207,8 @@ data class AccountListItem (
 data class AssetTypeItem(
     val assetTypeMeta: AssetTypeMeta,
     val assetTypeSum: Int,
-    val assetTypePercentage: Float
-)
+    val assetTypePercentage: Float,
+    val targetSum: Int,
+    val targetWeight: Float
+) {
+}

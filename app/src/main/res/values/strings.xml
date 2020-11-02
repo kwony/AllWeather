@@ -47,6 +47,14 @@
     <string name="type_gold"><![CDATA[금]]></string>
     <string name="type_commodity"><![CDATA[원자재]]></string>
 
+    <string name="detail_current_weight"><![CDATA[현재비중]]></string>
+    <string name="detail_current_amount"><![CDATA[현재금액]]></string>
+    <string name="detail_target_weight"><![CDATA[목표비중]]></string>
+    <string name="detail_target_amount"><![CDATA[목표금액]]></string>
+
+    <string name="detail_need_to_raise"><![CDATA[+%s원 증액 해야합니다]]></string>
+    <string name="detail_need_to_down"><![CDATA[-%s원 감액 해야합니다]]></string>
+
     <string name="main_tab_bottom_assets"><![CDATA[종목]]></string>
     <string name="main_tab_bottom_graph"><![CDATA[그래프]]></string>
     <string name="main_tab_bottom_manage"><![CDATA[관리]]></string>
