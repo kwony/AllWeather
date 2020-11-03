@@ -59,4 +59,8 @@ class TitleBar @JvmOverloads constructor(
         drawableRight?.let { layout_titlebar_right_iv.setImageDrawable(drawableRight) }
         drawableRightMargin.let { (layout_titlebar_right_iv.layoutParams as MarginLayoutParams).apply { marginEnd = it } }
     }
+
+    fun setTitle(title: String) {
+        layout_titlebar_title.text = title
+    }
 }

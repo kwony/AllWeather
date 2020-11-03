@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.fragment_asset_type_editor.*
+import kotlinx.android.synthetic.main.fragment_main.view.*
 import kwony.allweather.R
 import kwony.allweather.data.asset.AssetTypeMeta
 
@@ -47,6 +48,14 @@ class AssetTypeEditorDialogFragment: DialogFragment() {
         } else {
             context?.getString(R.string.common_edit)
         }
+
+        val titleBarTitle = if (creationMode) {
+            context?.getString(R.string.create_asset_type_title)
+        } else {
+            context?.getString(R.string.edit_asset_type_title)
+        }
+
+        titleBarTitle?.let { fr_asset_type_editor_titlebar.setTitle(it) }
 
         if (!creationMode && assetTypeMeta != null) {
             fr_asset_type_editor_name_edit.setText(assetTypeMeta.assetTypeName)

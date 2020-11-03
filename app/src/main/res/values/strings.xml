@@ -12,6 +12,9 @@
     <string name="edit_asset_title"><![CDATA[자산 수정하기]]></string>
     <string name="create_asset_title"><![CDATA[자산 추가하기]]></string>
 
+    <string name="edit_asset_type_title"><![CDATA[자산군 수정하기]]></string>
+    <string name="create_asset_type_title"><![CDATA[자산군 추가하기]]></string>
+
     <string name="common_name"><![CDATA[이름]]></string>
     <string name="common_eval_amount"><![CDATA[평가 금액]]></string>
     <string name="common_type"><![CDATA[구분]]></string>
@@ -27,23 +30,23 @@
 
     <string name="asset_name_hint"><![CDATA[- 종목 이름을 입력해주세요 ex) 삼성전자]]></string>
     <string name="asset_amount_hint"><![CDATA[- 종목 평가 금액을 입력해주세요 ex) 1,000,000원 ]]></string>
-    <string name="asset_type_hint"><![CDATA[- 자산의 종류를 선택해주세요]]></string>
+    <string name="asset_type_hint"><![CDATA[- 자산군을 선택해주세요]]></string>
 
-    <string name="asset_type_editor_name_hint"><![CDATA[자산 종류 이름을 입력해주세요 ex) 주식]]></string>
-    <string name="asset_type_editor_weight_hint"><![CDATA[자산 종류의 포트폴리오 비중을 입력해주세요]]></string>
+    <string name="asset_type_editor_name_hint"><![CDATA[자산군 이름을 입력해주세요 ex) 주식]]></string>
+    <string name="asset_type_editor_weight_hint"><![CDATA[자산군 포트폴리오 비중을 입력해주세요]]></string>
 
     <string name="account_name_hint"><![CDATA[- 계좌 이름을 입력해주세요]]></string>
-    <string name="account_type_hint"><![CDATA[- 자산 배분 종류와 비율을 설정해주세요]]></string>
+    <string name="account_type_hint"><![CDATA[- 자산군 비율을 설정해주세요]]></string>
 
-    <string name="account_asset_type_add"><![CDATA[자산 종류를 추가해보세요]]></string>
+    <string name="account_asset_type_add"><![CDATA[자산군을 추가해보세요]]></string>
 
     <string name="account_add"><![CDATA[계좌를 추가해보세요]]></string>
     <string name="account_selected"><![CDATA[(선택됨)]]></string>
-    <string name="account_score_80_100"><![CDATA[자산 배분을 아주 잘하고 계시군요!]]></string>
-    <string name="account_score_60_80"><![CDATA[자산 배분을 잘하고 계시군요!]]></string>
-    <string name="account_score_40_60"><![CDATA[자산 배분 조정이 필요해 보입니다]]></string>
-    <string name="account_score_20_40"><![CDATA[자산 배분 조정이 매우 필요해보입니다]]></string>
-    <string name="account_score_0_20"><![CDATA[포트폴리오 재점검이 필요합니다]]></string>
+    <string name="account_score_80_100"><![CDATA[분산투자를 아주 잘하고 계시군요!]]></string>
+    <string name="account_score_60_80"><![CDATA[분산투자를 잘하고 계시군요!]]></string>
+    <string name="account_score_40_60"><![CDATA[분산투자 조정이 필요해 보입니다]]></string>
+    <string name="account_score_20_40"><![CDATA[분산투자 조정이 매우 필요해보입니다]]></string>
+    <string name="account_score_0_20"><![CDATA[분산투자 재점검이 필요합니다]]></string>
 
     <string name="type_stock"><![CDATA[주식]]></string>
     <string name="type_short_bond"><![CDATA[단기채권]]></string>

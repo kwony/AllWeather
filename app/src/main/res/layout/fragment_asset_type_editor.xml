@@ -55,7 +55,7 @@
             android:id="@+id/fr_asset_type_editor_weight_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="@string/common_weight"
             android:textStyle="bold"
             android:textSize="14sp"
@@ -64,7 +64,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:orientation="vertical"
             android:background="@drawable/shape_editor_dialog_input_background">
 
@@ -85,7 +85,7 @@
 
         <TextView
             android:id="@+id/fr_asset_type_editor_done"
-            android:layout_marginVertical="12dp"
+            android:layout_marginVertical="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#fff"
