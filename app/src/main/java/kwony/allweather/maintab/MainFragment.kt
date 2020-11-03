@@ -75,6 +75,11 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         }
 
+        binding.naviContent.editIv.setOnClickListener {
+            val dialog = AccountEditorDialogFragment.newInstance(false, mainViewModel.currentAccountLiveData.value!!.accountId)
+
+            dialog.show(childFragmentManager, null)
+        }
     }
 
     private fun observe() {

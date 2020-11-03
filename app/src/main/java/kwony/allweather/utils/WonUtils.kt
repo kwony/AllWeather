@@ -21,8 +21,8 @@ object WonUtils {
         return String.format(
             "%s%s%s%s",
             parseMoneyUnit(ukUnit, context.getString(R.string.common_uk), false),
-            parseMoneyUnit(manUnit, context.getString(R.string.common_man)),
-            parseMoneyUnit(wonUnit, context.getString(R.string.common_money_default)),
+            parseMoneyUnit(manUnit, context.getString(R.string.common_man), ukUnit > 0),
+            parseMoneyUnit(wonUnit, context.getString(R.string.common_money_default), manUnit > 0),
             context.getString(R.string.common_won_unit)
         )
     }

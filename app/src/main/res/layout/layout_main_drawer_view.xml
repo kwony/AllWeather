@@ -16,14 +16,27 @@
         android:background="@drawable/shape_selected_account_background"
         android:layout_marginHorizontal="10dp">
 
-        <TextView
-            android:id="@+id/layout_drawer_selected_account_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="#000"
-            android:textStyle="bold"
-            tools:text="올웨더포트폴리오"/>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/layout_drawer_selected_account_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                tools:text="올웨더포트폴리오"/>
+
+            <ImageView
+                android:id="@+id/layout_drawer_selected_account_edit"
+                android:layout_marginStart="5dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_edit"
+                android:layout_gravity="center_vertical"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"

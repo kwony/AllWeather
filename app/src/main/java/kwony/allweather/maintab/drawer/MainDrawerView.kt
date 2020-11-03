@@ -25,6 +25,8 @@ class MainDrawerView @JvmOverloads constructor(
 
     val accountRv: RecyclerView get() = layout_drawer_account_list
 
+    val editIv: ImageView get() = layout_drawer_selected_account_edit
+
     fun setSelectedAccount(accountDetailItem: AccountDetailItem) {
         layout_drawer_selected_account_name.text = accountDetailItem.accountMeta.accountName
         layout_drawer_selected_account_readable_amount.text = WonUtils.wonReadable(context, accountDetailItem.accountSum)
