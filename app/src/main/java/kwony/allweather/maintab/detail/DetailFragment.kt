@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kwony.allweather.R
 import kwony.allweather.databinding.FragmentDetailBinding
+import kwony.allweather.editor.AssetTypeEditorDialogFragment
 import kwony.allweather.maintab.AssetTypeItem
 import kwony.allweather.maintab.MainViewModel
 
@@ -21,7 +22,15 @@ class DetailFragment: Fragment(R.layout.fragment_detail) {
 
     private val adapterClickListener: DetailAdapterListener = object: DetailAdapterListener {
         override fun clickEdit(item: AssetTypeItem) {
+            val dialog = AssetTypeEditorDialogFragment.newInstance(false, item.assetTypeMeta).apply {
+                doneCallback = { assetTypeMeta ->
+                    assetTypeMeta?.run {
+                        mainViewModel.upsertAssetType(this)
+                    }
+                }
+            }
 
+            dialog.show(childFragmentManager, null)
         }
 
         override fun clickDelete(item: AssetTypeItem) {

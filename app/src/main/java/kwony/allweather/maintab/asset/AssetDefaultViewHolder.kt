@@ -7,9 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.RxView
 import kwony.allweather.R
 import kwony.allweather.databinding.ViewholderAssetDefaultBinding
-import kwony.allweather.utils.NumberUtils
-import java.text.NumberFormat
-import java.util.*
+import kwony.allweather.utils.WonUtils
 
 class AssetDefaultViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
@@ -26,7 +24,7 @@ class AssetDefaultViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) 
     fun bind(item: AssetAdapterItem, listener: AssetAdapterClickListener?) {
         binding = ViewholderAssetDefaultBinding.bind(itemView)
         binding.vhAssetName.text = item.assetName
-        binding.vhAssetAmount.text = NumberUtils.wonString(itemView.context, item.assetAmount)
+        binding.vhAssetAmount.text = WonUtils.wonString(itemView.context, item.assetAmount)
 
         RxView.clicks(binding.vhAssetEdit)
             .doOnNext { listener?.editClick(item.assetMeta) }

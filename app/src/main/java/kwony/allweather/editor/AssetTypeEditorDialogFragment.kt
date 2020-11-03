@@ -48,6 +48,15 @@ class AssetTypeEditorDialogFragment: DialogFragment() {
             context?.getString(R.string.common_edit)
         }
 
+        if (!creationMode && assetTypeMeta != null) {
+            fr_asset_type_editor_name_edit.setText(assetTypeMeta.assetTypeName)
+            fr_asset_type_editor_weight_edit.setText(assetTypeMeta.targetWeight.toString())
+        }
+
+        fr_asset_type_editor_titlebar.rightIvClick.setOnClickListener {
+            dismissAllowingStateLoss()
+        }
+
         fr_asset_type_editor_done.setOnClickListener {
             if (creationMode) {
                 val createdAssetType = AssetTypeMeta(

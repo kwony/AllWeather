@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.RxView
 import dagger.hilt.android.AndroidEntryPoint
 import kwony.allweather.R
+import kwony.allweather.common.BaseFragment
 import kwony.allweather.common.TypeAdapterItem
 import kwony.allweather.databinding.FragmentMainBinding
 import kwony.allweather.editor.AccountEditorDialogFragment
@@ -20,7 +21,7 @@ import kwony.allweather.utils.FragmentUtils
 import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
-class MainFragment : Fragment(R.layout.fragment_main) {
+class MainFragment : BaseFragment(R.layout.fragment_main) {
 
     lateinit var binding: FragmentMainBinding
 
@@ -96,5 +97,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
             accountAdapter.submitItems(adapterItem)
         })
+    }
+
+    override fun handleBackPressed(): Boolean {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.END)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.END)
+            return true
+        }
+
+        return super.handleBackPressed()
     }
 }

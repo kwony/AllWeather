@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import io.reactivex.Flowable
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
@@ -166,6 +167,16 @@ class MainViewModel @ViewModelInject constructor(
 
     fun changeSelectedAccountId(accountId: Long) {
         appPreference.updateSelectedAccountId(accountId)
+    }
+
+    fun upsertAssetType(assetTypeMeta: AssetTypeMeta) {
+        compositeDisposable.add(
+            Single.fromCallable {
+                assetTypeRepository.upsert(assetTypeMeta)
+            }
+                .subscribeOn(Schedulers.io())
+                .subscribe()
+        )
     }
 
     private fun createDefaultAccount() = Flowable.fromCallable {

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kwony.allweather.R
 import kwony.allweather.databinding.ViewholderDetailBinding
 import kwony.allweather.maintab.AssetTypeItem
-import kwony.allweather.utils.NumberUtils
+import kwony.allweather.utils.WonUtils
 import java.text.NumberFormat
 import java.util.*
 
@@ -28,8 +28,8 @@ class DetailViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         binding = ViewholderDetailBinding.bind(itemView)
 
         binding.vhDetailAssetTypeName.text = item.assetTypeMeta.assetTypeName
-        binding.vhDetailAssetTypeAmount.text = NumberUtils.wonString(itemView.context, item.assetTypeSum)
-        binding.vhDetailAssetTypeTargetAmount.text = NumberUtils.wonString(itemView.context, item.targetSum)
+        binding.vhDetailAssetTypeAmount.text = WonUtils.wonString(itemView.context, item.assetTypeSum)
+        binding.vhDetailAssetTypeTargetAmount.text = WonUtils.wonString(itemView.context, item.targetSum)
         binding.vhDetailAssetTypeWeight.text = String.format("%s", (item.assetTypePercentage * 100).toInt().toString()) + "%"
         binding.vhDetailAssetTypeTargetWeight.text = String.format("%s", (item.assetTypeMeta.targetWeight).toString()) + "%"
 
