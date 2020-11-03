@@ -24,7 +24,7 @@ class AssetDefaultViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) 
     fun bind(item: AssetAdapterItem, listener: AssetAdapterClickListener?) {
         binding = ViewholderAssetDefaultBinding.bind(itemView)
         binding.vhAssetName.text = item.assetName
-        binding.vhAssetAmount.text = WonUtils.wonString(itemView.context, item.assetAmount)
+        binding.vhAssetAmount.text = WonUtils.wonAbsolute(itemView.context, item.assetAmount)
 
         RxView.clicks(binding.vhAssetEdit)
             .doOnNext { listener?.editClick(item.assetMeta) }

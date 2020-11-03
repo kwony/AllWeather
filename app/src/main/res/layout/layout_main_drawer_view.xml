@@ -25,15 +25,31 @@
             android:textStyle="bold"
             tools:text="올웨더포트폴리오"/>
 
-        <TextView
-            android:id="@+id/layout_drawer_selected_account_amount"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginTop="10dp"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:textColor="#141414"
-            tools:text="1,400,000원"/>
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/layout_drawer_selected_account_readable_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="#141414"
+                tools:text="140만원"/>
+
+            <TextView
+                android:id="@+id/layout_drawer_selected_account_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:textSize="13sp"
+                android:textColor="#989898"
+                android:layout_gravity="center_vertical"
+                tools:text="1,400,000원"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/layout_drawer_selected_account_score"

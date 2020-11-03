@@ -28,8 +28,8 @@ class DetailViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         binding = ViewholderDetailBinding.bind(itemView)
 
         binding.vhDetailAssetTypeName.text = item.assetTypeMeta.assetTypeName
-        binding.vhDetailAssetTypeAmount.text = WonUtils.wonString(itemView.context, item.assetTypeSum)
-        binding.vhDetailAssetTypeTargetAmount.text = WonUtils.wonString(itemView.context, item.targetSum)
+        binding.vhDetailAssetTypeAmount.text = WonUtils.wonAbsolute(itemView.context, item.assetTypeSum)
+        binding.vhDetailAssetTypeTargetAmount.text = WonUtils.wonAbsolute(itemView.context, item.targetSum)
         binding.vhDetailAssetTypeWeight.text = String.format("%s", (item.assetTypePercentage * 100).toInt().toString()) + "%"
         binding.vhDetailAssetTypeTargetWeight.text = String.format("%s", (item.assetTypeMeta.targetWeight).toString()) + "%"
 

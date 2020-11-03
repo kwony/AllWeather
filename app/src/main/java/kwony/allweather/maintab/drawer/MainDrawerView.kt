@@ -27,7 +27,8 @@ class MainDrawerView @JvmOverloads constructor(
 
     fun setSelectedAccount(accountDetailItem: AccountDetailItem) {
         layout_drawer_selected_account_name.text = accountDetailItem.accountMeta.accountName
-        layout_drawer_selected_account_amount.text = WonUtils.wonString(context, accountDetailItem.accountSum)
+        layout_drawer_selected_account_readable_amount.text = WonUtils.wonReadable(context, accountDetailItem.accountSum)
+        layout_drawer_selected_account_amount.text = WonUtils.wonAbsolute(context, accountDetailItem.accountSum)
 
         layout_drawer_selected_account_score_desc.text = when (accountDetailItem.score) {
             in 80..100 -> {
