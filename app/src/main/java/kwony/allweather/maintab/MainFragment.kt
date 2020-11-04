@@ -2,6 +2,7 @@ package kwony.allweather.maintab
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -39,6 +40,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
     private val accountAdapter = MainAccountAdapter(listener)
 
+    private var detailOpen = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -59,14 +62,14 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         RxView.clicks(binding.hamburger)
             .throttleFirst(300, TimeUnit.MILLISECONDS)
             .doOnNext {
-                binding.drawerLayout.openDrawer(GravityCompat.END)
+                binding.drawerLayout.openDrawer(GravityCompat.START)
             }
             .subscribe()
 
         binding.drawerLayout.addDrawerListener(object: DrawerLayout.SimpleDrawerListener(){
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 super.onDrawerSlide(drawerView, slideOffset)
-                binding.content.translationX = -slideOffset * binding.naviContent.width
+                binding.content.translationX = slideOffset * binding.naviContent.width
             }
         })
 
@@ -80,12 +83,25 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
             dialog.show(childFragmentManager, null)
         }
+
+        binding.titleBarArrow.setOnClickListener {
+            if (detailOpen) {
+                binding.accountDetail.visibility = View.GONE
+                binding.titleBarArrow.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_down))
+                detailOpen = false
+            } else {
+                binding.accountDetail.visibility = View.VISIBLE
+                binding.titleBarArrow.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_up))
+                detailOpen = true
+            }
+        }
     }
 
     private fun observe() {
         mainViewModel.currentAccountLiveData.observe(viewLifecycleOwner, Observer {
             binding.titleBarTitle.text = it.accountName
             binding.naviContent.setSelectedAccount(it)
+            binding.accountDetail.setSelectedAccount(it)
         })
 
         mainViewModel.accountListLiveData.observe(viewLifecycleOwner, Observer { accountList ->
@@ -105,8 +121,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     }
 
     override fun handleBackPressed(): Boolean {
-        if (binding.drawerLayout.isDrawerOpen(GravityCompat.END)) {
-            binding.drawerLayout.closeDrawer(GravityCompat.END)
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
             return true
         }
 

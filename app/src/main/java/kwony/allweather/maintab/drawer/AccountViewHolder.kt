@@ -1,5 +1,8 @@
 package kwony.allweather.maintab.drawer
 
+import android.graphics.Typeface
+import android.text.SpannableString
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,11 +30,12 @@ class AccountViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         if (itemType.item.selected) {
             binding.accountName.setTextColor(0xff141414.toInt())
+            binding.accountName.text = SpannableString(itemType.item.accountMeta.accountName).apply {
+                setSpan(StyleSpan(Typeface.BOLD), 0, this.length, 0)
+            }
         } else {
             binding.accountName.setTextColor(0xff989898.toInt())
+            binding.accountName.text = itemType.item.accountMeta.accountName
         }
-
-        binding.accountName.text = itemType.item.accountMeta.accountName
     }
-
 }
