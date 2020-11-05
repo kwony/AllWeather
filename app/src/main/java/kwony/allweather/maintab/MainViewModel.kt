@@ -94,7 +94,7 @@ class MainViewModel @ViewModelInject constructor(
                             currentAssetTypeItems.setValueSafely(assetTypeItems)
 
                             val varianceSum = assetTypeItems.sumByDouble {
-                                (it.assetTypePercentage - it.assetTypeMeta.targetWeight.toFloat() / 100).pow(2).toDouble()
+                                (it.assetTypePercentage - it.targetWeight).toDouble()
                             }
 
                             val currentAccountDetailItem = accounts.filter { it.accountId == selectedAccountId }.map { currentAccount ->

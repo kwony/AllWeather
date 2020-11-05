@@ -25,19 +25,19 @@ class MainAccountDetailView @JvmOverloads constructor(
         layout_main_account_detail_account_sum.text = WonUtils.wonAbsolute(context, accountDetailItem.accountSum)
         layout_main_account_detail_account_sum_readable.text = WonUtils.wonReadable(context, accountDetailItem.accountSum)
         layout_main_account_detail_account_score.text = when (accountDetailItem.score) {
-            in 80..100 -> {
+            in 90..100 -> {
                 setStarScore(5)
                 context.getString(R.string.account_score_80_100)
             }
-            in 60..80 -> {
+            in 70..90 -> {
                 setStarScore(4)
                 context.getString(R.string.account_score_60_80)
             }
-            in 40..60 -> {
+            in 50..70 -> {
                 setStarScore(3)
                 context.getString(R.string.account_score_40_60)
             }
-            in 20..40 -> {
+            in 30..50 -> {
                 setStarScore(2)
                 context.getString(R.string.account_score_20_40)
             }
