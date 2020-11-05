@@ -27,6 +27,14 @@
     <string name="common_uk"><![CDATA[%s억]]></string>
     <string name="common_money_default"><![CDATA[%s]]></string>
     <string name="common_won_unit"><![CDATA[원]]></string>
+    <string name="common_cancel"><![CDATA[취소]]></string>
+    <string name="common_confirm"><![CDATA[확인]]></string>
+
+    <string name="asset_add"><![CDATA[종목 추가]]></string>
+    <string name="asset_edit"><![CDATA[종목 수정]]></string>
+    <string name="asset_delete"><![CDATA[종목 삭제]]></string>
+
+    <string name="common_delete_subtitle"><![CDATA[정말 삭제 하시겠습니까?]]></string>
 
     <string name="asset_name_hint"><![CDATA[- 종목 이름을 입력해주세요 ex) 삼성전자]]></string>
     <string name="asset_amount_hint"><![CDATA[- 종목 평가 금액을 입력해주세요 ex) 1,000,000원 ]]></string>

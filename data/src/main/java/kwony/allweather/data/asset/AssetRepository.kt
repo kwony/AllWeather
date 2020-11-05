@@ -20,4 +20,8 @@ class AssetRepository(private val assetDao: AssetDao) {
     fun upsert(assetMeta: AssetMeta): Long {
         return assetDao.upsert(assetMeta)
     }
+
+    fun delete(assetId: Long) {
+        return assetDao.delete(assetId)
+    }
 }

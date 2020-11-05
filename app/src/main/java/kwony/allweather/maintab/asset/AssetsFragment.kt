@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kwony.allweather.R
+import kwony.allweather.common.ConfirmDialogFragment
 import kwony.allweather.data.asset.AssetMeta
 import kwony.allweather.databinding.FragmentAssetsBinding
 import kwony.allweather.editor.AssetEditorDialogFragment
@@ -34,7 +35,13 @@ class AssetsFragment: Fragment(R.layout.fragment_assets) {
         }
 
         override fun deleteClick(assetMeta: AssetMeta) {
-            // todo: delete 하기
+            val dialog = ConfirmDialogFragment.newInstance(requireContext().getString(R.string.asset_delete), requireContext().getString(R.string.common_delete_subtitle)).apply {
+                this.okayCallback = {
+                    mainViewModel.deleteAsset(assetMeta.assetId)
+                }
+            }
+
+            dialog.show(childFragmentManager, null)
         }
     }
 
