@@ -28,4 +28,8 @@ class AssetTypeRepository(private val assetTypeDao: AssetTypeDao) {
     fun deleteByAccountId(accountId: Long) {
         return assetTypeDao.deleteByAccountId(accountId)
     }
+
+    fun delete(assetTypeId: Long) {
+        return assetTypeDao.delete(assetTypeId)
+    }
 }

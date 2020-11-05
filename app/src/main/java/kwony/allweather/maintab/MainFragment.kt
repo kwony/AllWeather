@@ -95,6 +95,12 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 detailOpen = true
             }
         }
+
+        binding.titleBarEdit.setOnClickListener {
+            val dialog = AccountEditorDialogFragment.newInstance(false, mainViewModel.currentAccountLiveData.value!!.accountId)
+
+            dialog.show(childFragmentManager, null)
+        }
     }
 
     private fun observe() {

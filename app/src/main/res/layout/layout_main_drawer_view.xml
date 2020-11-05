@@ -4,16 +4,14 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_marginTop="40dp"
+    android:layout_marginTop="24dp"
     android:background="#fff"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:orientation="vertical"
-        android:padding="5dp"
         android:visibility="gone"
         android:background="@drawable/shape_selected_account_background"
         android:layout_marginHorizontal="10dp">
@@ -104,12 +102,6 @@
             tools:text="자산배분을 매우 잘하고 계시군요!"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="15dp"
-        android:background="#d8d8d8"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/layout_drawer_account_list"

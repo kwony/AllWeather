@@ -175,6 +175,16 @@ class MainViewModel @ViewModelInject constructor(
         )
     }
 
+    fun deleteAssetType(assetTypeId: Long) {
+        compositeDisposable.add(
+            Single.fromCallable {
+                assetTypeRepository.delete(assetTypeId)
+            }
+                .subscribeOn(Schedulers.io())
+                .subscribe()
+        )
+    }
+
     fun changeSelectedAccountId(accountId: Long) {
         appPreference.updateSelectedAccountId(accountId)
     }

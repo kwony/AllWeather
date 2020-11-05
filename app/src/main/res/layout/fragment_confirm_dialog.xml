@@ -20,6 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:textStyle="bold"
             android:textColor="#141414"
             tools:text="자산 삭제"/>
 
@@ -27,11 +28,13 @@
             android:id="@+id/fr_confirm_dialog_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#989898"
             android:layout_marginTop="20dp"
             tools:text="정말 삭제 하시겠습니까?"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -41,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#fff"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -57,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#141414"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:layout_gravity="center"

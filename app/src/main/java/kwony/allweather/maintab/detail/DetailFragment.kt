@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kwony.allweather.R
+import kwony.allweather.common.ConfirmDialogFragment
 import kwony.allweather.databinding.FragmentDetailBinding
 import kwony.allweather.editor.AssetTypeEditorDialogFragment
 import kwony.allweather.maintab.AssetTypeItem
@@ -34,7 +35,13 @@ class DetailFragment: Fragment(R.layout.fragment_detail) {
         }
 
         override fun clickDelete(item: AssetTypeItem) {
+            val dialog = ConfirmDialogFragment.newInstance(requireContext().getString(R.string.common_delete), requireContext().getString(R.string.common_delete_subtitle)).apply {
+                this.okayCallback = {
+                    mainViewModel.deleteAssetType(item.assetTypeMeta.assetTypeId)
+                }
+            }
 
+            dialog.show(childFragmentManager, null)
         }
     }
 

@@ -61,8 +61,10 @@ class AssetEditorDialogFragment: DialogFragment() {
         }
 
         fr_asset_editor_titlebar.rightText.text = if (creationMode) {
+            fr_asset_editor_titlebar.setTitle(context?.getString(R.string.asset_add)?: "")
             requireContext().getString(R.string.common_add)
         } else {
+            fr_asset_editor_titlebar.setTitle(context?.getString(R.string.asset_edit)?: "")
             requireContext().getString(R.string.common_edit)
         }
 
